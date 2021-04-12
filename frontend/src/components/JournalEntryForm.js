@@ -1,17 +1,27 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
-const JournalEntryForm = () => {
+const JournalEntryForm = ({ journalEntries, setJournalEntries }) => {
   const [content, setContent] = useState('')
 
   const handleSubmit = async (event) => {
-    console.log(event)
     event.preventDefault()
-    setContent('')
+    const journalEntryObject = {
+      content: content,
+      date: new Date()
+    }
+
+    axios
+      .post('http://localhost:3001/api/journalEntries', journalEntryObject)
+      .then(response => {
+        setJournalEntries(journalEntries.concat(response.data))
+        setContent('')
+      })
   }
 
   return (
     <div>
-      <h2>Add Journal entry</h2>
+      <h4>Add journal entry</h4>
       <form onSubmit={handleSubmit}>
         <div>
           Content
