@@ -5,10 +5,16 @@ const JournalEntry = ({ journalEntry }) => {
   const date = fullDate.getDate()
   const month = fullDate.getMonth()
   const year = fullDate.getFullYear()
+
+  const handleRemove = () => {
+    return ''
+  }
+
   return(
     <div>
       <h4>{`${date}/${month}/${year}`}</h4>
       {journalEntry.content}
+      <button onClick={() => handleRemove(journalEntry.id)}>Remove</button>
     </div>
   )
 }

@@ -1,22 +1,15 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addJournalEntry } from '../reducers/journalEntryReducer'
 
-const JournalEntryForm = ({ journalEntries, setJournalEntries }) => {
-  const [content, setContent] = useState('')
+const JournalEntryForm = () => {
+  const dispatch = useDispatch()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const journalEntryObject = {
-      content: content,
-      date: new Date()
-    }
-
-    axios
-      .post('http://localhost:3001/api/journalEntries', journalEntryObject)
-      .then(response => {
-        setJournalEntries(journalEntries.concat(response.data))
-        setContent('')
-      })
+    const content = event.target.content.value
+    event.target.content.value = ''
+    dispatch(addJournalEntry(content))
   }
 
   return (
@@ -25,13 +18,9 @@ const JournalEntryForm = ({ journalEntries, setJournalEntries }) => {
       <form onSubmit={handleSubmit}>
         <div>
           Content
-          <input
-            id='content'
-            value={content}
-            onChange={({ target }) => setContent(target.value)}
-          />
+          <input name='content' />
         </div>
-        <button id='login-button' type="submit">Submit</button>
+        <button type='submit'>Submit</button>
       </form>
     </div>
   )
