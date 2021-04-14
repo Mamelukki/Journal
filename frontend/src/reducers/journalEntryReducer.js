@@ -6,6 +6,8 @@ const journalEntryReducer = (state = [], action) => {
     return action.data
   case 'ADD_JOURNAL_ENTRY':
     return [...state, action.data]
+  case 'REMOVE_JOURNAL_ENTRY':
+    return state.filter(journalEntry => journalEntry.id !== action.data)
   default:
     return state
   }
@@ -27,6 +29,16 @@ export const addJournalEntry = (content) => {
     dispatch({
       type: 'ADD_JOURNAL_ENTRY',
       data: newJournalEntry
+    })
+  }
+}
+
+export const removeJournalEntry = (id) => {
+  return async dispatch => {
+    await journalEntryService.remove(id)
+    dispatch({
+      type: 'REMOVE_JOURNAL_ENTRY',
+      data: id
     })
   }
 }
