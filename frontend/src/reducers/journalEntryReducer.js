@@ -6,8 +6,6 @@ const journalEntryReducer = (state = [], action) => {
     return action.data
   case 'ADD_JOURNAL_ENTRY':
     return [...state, action.data]
-  case 'ZERO':
-    return 0
   default:
     return state
   }
