@@ -21,6 +21,8 @@ const registerForm = () => {
         <div>
           Username
           <input name='username' />
+        </div>
+        <div>
           Password
           <input name='password' type='password' />
         </div>

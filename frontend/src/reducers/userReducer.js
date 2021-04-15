@@ -24,7 +24,6 @@ export const initializeUsers = () => {
 export const addUser = (username, password) => {
   return async dispatch => {
     const newUser = await userService.createNew(username, password)
-    console.log(newUser)
     dispatch({
       type: 'ADD_USER',
       data: newUser

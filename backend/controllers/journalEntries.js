@@ -1,15 +1,18 @@
 const journalEntriesRouter = require('express').Router()
 const JournalEntry = require('../models/journalEntry')
+const jwt = require('jsonwebtoken')
 
 journalEntriesRouter.get('/', async (request, response) => {
-  const journalEntries = await JournalEntry.find({})
+  const journalEntries = await JournalEntry
+    .find({}).populate('user', { username: 1 })
   response.json(journalEntries.map(journalEntry => journalEntry.toJSON()))
 })
 
-journalEntriesRouter.post('/', async (request, response, next) => {
+journalEntriesRouter.post('/', async (request, response) => {
   const body = request.body
 
-  const user = await User.findById(body.userId)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const user = await User.findById(decodedToken.id)
 
   const journalEntry = new JournalEntry({
     content: body.content,
@@ -24,7 +27,8 @@ journalEntriesRouter.post('/', async (request, response, next) => {
   response.json(savedJournalEntry.toJSON())
 })
 
-journalEntriesRouter.delete('/:id', async (request, response, next) => {
+journalEntriesRouter.delete('/:id', async (request, response) => {
+  // TO DO: delete the journal entry from the user too
   await JournalEntry.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
