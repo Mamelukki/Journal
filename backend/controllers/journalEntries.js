@@ -9,12 +9,18 @@ journalEntriesRouter.get('/', async (request, response) => {
 journalEntriesRouter.post('/', async (request, response, next) => {
   const body = request.body
 
+  const user = await User.findById(body.userId)
+
   const journalEntry = new JournalEntry({
     content: body.content,
-    date: new Date()
-  }) 
+    date: new Date(),
+    user: user.id
+  })
 
-  const savedJournalEntry = await journalEntry.save()   
+  const savedJournalEntry = await journalEntry.save()
+  user.journalEntries = user.journalEntries.concat(savedJournalEntry.id)
+  await user.save()
+
   response.json(savedJournalEntry.toJSON())
 })
 

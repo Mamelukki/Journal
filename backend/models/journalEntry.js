@@ -3,11 +3,16 @@ const mongoose = require('mongoose')
 const journalEntrySchema = new mongoose.Schema({
   content: {
     type: String,
-    required: true
+    required: true,
+    minlength: 3
   },
   date: {
     type: Date,
     required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
