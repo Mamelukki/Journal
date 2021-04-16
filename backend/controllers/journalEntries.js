@@ -10,8 +10,11 @@ journalEntriesRouter.get('/', async (request, response) => {
 
 journalEntriesRouter.post('/', async (request, response) => {
   const body = request.body
+  console.log(body)
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  console.log(decodedToken.id)
+  console.log(User.find({}))
   const user = await User.findById(decodedToken.id)
 
   const journalEntry = new JournalEntry({
