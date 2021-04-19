@@ -20,25 +20,26 @@ Application can so far only be run on localhost. In case you want to test the ap
 
 Start by cloning the repository.
 
-Install dependencies by running 
+Open both the backend and the frontend folders on your command line and install required dependencies by running 
 ``` 
 npm install
 ``` 
 
-Start the backend by going to the backend folder and running 
+Start the backend by running
 
 ``` 
 npm run dev
 ``` 
 
-This should make the backend run on the port you defined in the .env file. 
+when you are in the backend folder. This should make the backend run on the port you defined in the .env file. 
 
-Start the frontend by going to the frontend folder and running 
+
+Start the frontend by running
 
 ``` 
 npm start
 ``` 
 
-This should make the frontend run on port 3000. 
+when you are in the frontend folder. This should make the frontend run on port 3000. 
 
-Use the application on [http://localhost:3000](http://localhost:3000). Happy testing :) 
+You should now be able to use the application on [http://localhost:3000](http://localhost:3000). Happy testing :) 
