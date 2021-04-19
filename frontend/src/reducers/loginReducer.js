@@ -7,6 +7,7 @@ const loginReducer = (state = null, action) => {
     console.log(action.data)
     return action.data
   case 'LOGOUT':
+    console.log(state)
     return null
   default:
     return state

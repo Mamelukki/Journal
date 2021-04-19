@@ -16,7 +16,8 @@ const JournalEntry = ({ journalEntry }) => {
   return(
     <div>
       <h4>{`${date}/${month}/${year}`}</h4>
-      {journalEntry.content}
+      <p>{journalEntry.content}</p>
+      <p>created by {journalEntry.user.username}</p>
       <button onClick={() => handleRemove(journalEntry.id)}>Remove</button>
     </div>
   )

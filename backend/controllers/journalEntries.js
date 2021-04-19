@@ -1,6 +1,7 @@
 const journalEntriesRouter = require('express').Router()
 const JournalEntry = require('../models/journalEntry')
 const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
 journalEntriesRouter.get('/', async (request, response) => {
   const journalEntries = await JournalEntry
@@ -10,17 +11,14 @@ journalEntriesRouter.get('/', async (request, response) => {
 
 journalEntriesRouter.post('/', async (request, response) => {
   const body = request.body
-  console.log(body)
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  console.log(decodedToken.id)
-  console.log(User.find({}))
   const user = await User.findById(decodedToken.id)
 
   const journalEntry = new JournalEntry({
     content: body.content,
     date: new Date(),
-    user: user.id
+    user: user._id
   })
 
   const savedJournalEntry = await journalEntry.save()
@@ -31,8 +29,22 @@ journalEntriesRouter.post('/', async (request, response) => {
 })
 
 journalEntriesRouter.delete('/:id', async (request, response) => {
-  // TO DO: delete the journal entry from the user too
-  await JournalEntry.findByIdAndRemove(request.params.id)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({ error: 'Token missing or invalid' })
+  }
+
+  const user = await User.findById(decodedToken.id)
+  const journalEntry = await JournalEntry.findById(request.params.id)
+
+  if (journalEntry.user.toString() !== user.id.toString()) {
+    return response.status(401).json({ error: 'Only the creator can delete the journal entry' })
+  }
+
+  await journalEntry.remove()
+  user.journalEntries = user.journalEntries.filter(journalEntry => journalEntry.id.toString() !== request.params.id.toString())
+  await user.save()
   response.status(204).end()
 })
 

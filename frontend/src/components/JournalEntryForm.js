@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addJournalEntry } from '../reducers/journalEntryReducer'
 
 const JournalEntryForm = () => {
   const dispatch = useDispatch()
+  const [content, setContent] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const content = event.target.content.value
-    event.target.content.value = ''
-    dispatch(addJournalEntry(content))
+    dispatch(addJournalEntry({ content }))
+    setContent('')
   }
 
   return (
@@ -18,7 +18,11 @@ const JournalEntryForm = () => {
       <form onSubmit={handleSubmit}>
         <div>
           Content
-          <input name='content' />
+          <input
+            id='content'
+            value={content}
+            onChange={({ target }) => setContent(target.value)}
+          />
         </div>
         <button type='submit'>Submit</button>
       </form>

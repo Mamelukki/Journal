@@ -23,9 +23,9 @@ export const initializeJournalEntries = () => {
   }
 }
 
-export const addJournalEntry = (content) => {
+export const addJournalEntry = (journalEntry) => {
   return async dispatch => {
-    const newJournalEntry = await journalEntryService.createNew(content)
+    const newJournalEntry = await journalEntryService.createNew(journalEntry)
     dispatch({
       type: 'ADD_JOURNAL_ENTRY',
       data: newJournalEntry
