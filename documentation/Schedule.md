@@ -9,4 +9,5 @@ Date | Hours | Description
 15.04.2021 | 4 | Add user schema, add backend and frontend support for creating users, start to use token based login (app is partly broken due to it, will fix it tomorrow)
 16.04.2021 | 4 | Add login option and show the current user (adding a journal entry is still broken and needs to be fixed), prepare notification component and reducer for the future
 19.04.2021 | 2 | Fix bug of adding journal entries, make deleting a journal entry possible only for the creator
-Hours in total | 22
+20.04.2021 | 0,5 | Start using notifications
+Hours in total | 22,5

@@ -4,6 +4,7 @@ import JournalEntry from './components/JournalEntry'
 import JournalEntryForm from './components/JournalEntryForm'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { setCurrentUser, logout } from './reducers/loginReducer'
@@ -16,6 +17,7 @@ function App() {
   const dispatch = useDispatch()
   const journalEntries = useSelector(state => state.journalEntries)
   const currentUser = useSelector(state => state.currentUser)
+  const notification = useSelector(state => state.notification)
 
   useEffect(() => {
     dispatch(initializeJournalEntries())
@@ -32,6 +34,7 @@ function App() {
         <Link style={{ color: 'white', padding: '5px' }} to="/register">Create account</Link>
         {!currentUser ?  <Link style={{ color: 'white', padding: '5px' }} to="/login">Login</Link> : <em style={{ color: 'white' }}>Welcome {currentUser.username} <button onClick={() => dispatch(logout())}>Logout</button></em>}
       </div>
+      <Notification notification={notification}/>
       <Switch>
         <Route path="/journalEntries">
           <JournalEntryForm />
