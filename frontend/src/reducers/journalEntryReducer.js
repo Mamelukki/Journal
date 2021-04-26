@@ -25,17 +25,15 @@ export const initializeJournalEntries = () => {
 
 export const addJournalEntry = (journalEntry) => {
   return async dispatch => {
-    const newJournalEntry = await journalEntryService.createNew(journalEntry)
     dispatch({
       type: 'ADD_JOURNAL_ENTRY',
-      data: newJournalEntry
+      data: journalEntry
     })
   }
 }
 
 export const removeJournalEntry = (id) => {
   return async dispatch => {
-    await journalEntryService.remove(id)
     dispatch({
       type: 'REMOVE_JOURNAL_ENTRY',
       data: id

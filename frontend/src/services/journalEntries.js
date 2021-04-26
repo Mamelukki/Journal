@@ -1,11 +1,14 @@
 import axios from 'axios'
+import storage from '../utils/storage'
 
 const baseUrl = 'http://localhost:3001/api/journalEntries'
 
-let token = null
-
-const setToken = newToken => {
-  token = `bearer ${newToken}`
+const getConfig = () => {
+  if (storage.loadUser()) {
+    return {
+      headers: { Authorization: `bearer ${storage.loadUser().token}` }
+    }
+  }
 }
 
 const getAll = async () => {
@@ -14,24 +17,17 @@ const getAll = async () => {
 }
 
 const createNew = async (newObject) => {
-  const config = {
-    headers: { Authorization: token }
-  }
-  const response = await axios.post(baseUrl, newObject, config)
+  const response = await axios.post(baseUrl, newObject, getConfig())
   return response.data
 }
 
 const remove = async (id) => {
-  const config = {
-    headers: { Authorization: token }
-  }
-  const response = await axios.delete(`${baseUrl}/${id}`, config)
+  const response = await axios.delete(`${baseUrl}/${id}`, getConfig())
   return response.data
 }
 
 export default {
   getAll,
   createNew,
-  remove,
-  setToken
+  remove
 }

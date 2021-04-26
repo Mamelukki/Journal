@@ -5,7 +5,7 @@ const Notification = ({ notification }) => {
     return null
   }
 
-  if (notification.type === 'error') {
+  if (notification.messageType === 'error') {
     return (
       <div style={{ padding: '20px', marginTop: '5px', backgroundColor: 'red', color: 'white' }}>
         {notification.message}

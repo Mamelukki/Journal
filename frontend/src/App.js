@@ -7,11 +7,12 @@ import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
-import { setCurrentUser, logout } from './reducers/loginReducer'
+import { login, logout } from './reducers/loginReducer'
 import {
   BrowserRouter as Router,
   Switch, Route, Link
 } from 'react-router-dom'
+import storage from './utils/storage'
 
 function App() {
   const dispatch = useDispatch()
@@ -22,8 +23,16 @@ function App() {
   useEffect(() => {
     dispatch(initializeJournalEntries())
     dispatch(initializeUsers())
-    dispatch(setCurrentUser())
+    const user = storage.loadUser()
+    if (user) {
+      dispatch(login(user))
+    }
   }, [dispatch])
+
+  const handleLogout = () => {
+    dispatch(logout())
+    storage.logoutUser()
+  }
 
   return (
     <Router>
@@ -32,7 +41,7 @@ function App() {
         <Link style={{ color: 'white', padding: '5px' }} to="/">Home</Link>
         <Link style={{ color: 'white', padding: '5px' }} to="/journalEntries">Journal entries</Link>
         <Link style={{ color: 'white', padding: '5px' }} to="/register">Create account</Link>
-        {!currentUser ?  <Link style={{ color: 'white', padding: '5px' }} to="/login">Login</Link> : <em style={{ color: 'white' }}>Welcome {currentUser.username} <button onClick={() => dispatch(logout())}>Logout</button></em>}
+        {!currentUser ? <Link style={{ color: 'white', padding: '5px' }} to="/login">Login</Link> : <em style={{ color: 'white' }}>Welcome {currentUser.username} <button onClick={() => handleLogout()}>Logout</button></em>}
       </div>
       <Notification notification={notification}/>
       <Switch>

@@ -10,4 +10,5 @@ Date | Hours | Description
 16.04.2021 | 4 | Add login option and show the current user (adding a journal entry is still broken and needs to be fixed), prepare notification component and reducer for the future
 19.04.2021 | 2 | Fix bug of adding journal entries, make deleting a journal entry possible only for the creator
 20.04.2021 | 0,5 | Start using notifications
-Hours in total | 22,5
+26.04.2021 | 2 | Separate local storage from the login reducer and fix issues
+Hours in total | 24,5
