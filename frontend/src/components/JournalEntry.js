@@ -13,8 +13,8 @@ const JournalEntry = ({ journalEntry }) => {
     dispatch(removeJournalEntry(id))
   }
 
-  return(
-    <div>
+  return (
+    <div className='journal-entry'>
       <h4>{`${date}/${month}/${year}`}</h4>
       <p>{journalEntry.content}</p>
       <p>Created by {journalEntry.user.username}</p>

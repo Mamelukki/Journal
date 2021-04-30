@@ -25,6 +25,7 @@ function App() {
     dispatch(initializeUsers())
     const user = storage.loadUser()
     if (user) {
+      console.log(user)
       dispatch(login(user))
     }
   }, [dispatch])
@@ -34,35 +35,68 @@ function App() {
     storage.logoutUser()
   }
 
-  return (
-    <Router>
-      <h1>Journal</h1>
-      <div style={{ backgroundColor: 'black', padding: '5px' }}>
-        <Link style={{ color: 'white', padding: '5px' }} to="/">Home</Link>
-        <Link style={{ color: 'white', padding: '5px' }} to="/journalEntries">Journal entries</Link>
-        <Link style={{ color: 'white', padding: '5px' }} to="/register">Create account</Link>
-        {!currentUser ? <Link style={{ color: 'white', padding: '5px' }} to="/login">Login</Link> : <em style={{ color: 'white' }}>Welcome {currentUser.username} <button onClick={() => handleLogout()}>Logout</button></em>}
-      </div>
-      <Notification notification={notification}/>
-      <Switch>
-        <Route path="/journalEntries">
-          <JournalEntryForm />
+  const printJournalEntries = () => {
+    if (currentUser) {
+      const personalJournalEntries = journalEntries.filter(journalEntry => journalEntry.user.id === currentUser.id)
+      return (
+        <div>
           <h3>Journal entries</h3>
-          {journalEntries.map(journalEntry =>
-            <JournalEntry key={journalEntry.id} journalEntry={journalEntry} />
-          )}
-        </Route>
-        <Route path="/register">
-          <RegisterForm />
-        </Route>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
-        <Route path="/">
-          <div style={{ padding: '5px', marginTop: '10px' }}>Welcome to Journal App</div>
-        </Route>
-      </Switch>
-    </Router>
+          <div className='journal-entries'>
+            {personalJournalEntries.map(journalEntry =>
+              <JournalEntry key={journalEntry.id} journalEntry={journalEntry} />
+            )}
+          </div>
+        </div>
+      )
+    }
+  }
+
+  return (
+    <div className='container'>
+      <Router>
+        <div className='navigation'>
+          <div className='navigation-links'>
+            <div className='journal-link' >
+              <Link to="/">Journal</Link>
+            </div>
+            <div className='journal-entries-link'>
+              <Link to="/journalEntries">Your journal entries</Link>
+            </div>
+          </div>
+          {!currentUser ?
+            <div className='navigation-links'>
+              <div className='login-link'>
+                <Link to="/login">Login</Link>
+              </div>
+              <div className='register-link'>
+                <Link to="/register">Create account</Link>
+              </div>
+            </div>
+            :
+            <div className='navigation-links'>
+              <em className='logged-user'>Welcome {currentUser.username} <button onClick={() => handleLogout()}>Logout</button></em>
+            </div>}
+        </div>
+        <div style={{ marginLeft: '25px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
+          <Notification notification={notification} />
+          <Switch>
+            <Route path="/journalEntries">
+              <JournalEntryForm />
+              {printJournalEntries()}
+            </Route>
+            <Route path="/register">
+              <RegisterForm />
+            </Route>
+            <Route path="/login">
+              <LoginForm />
+            </Route>
+            <Route path="/">
+              <div>Welcome to Journal App</div>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </div>
   )
 }
 

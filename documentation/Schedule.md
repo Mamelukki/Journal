@@ -11,4 +11,5 @@ Date | Hours | Description
 19.04.2021 | 2 | Fix bug of adding journal entries, make deleting a journal entry possible only for the creator
 20.04.2021 | 0,5 | Start using notifications
 26.04.2021 | 2 | Separate local storage from the login reducer and fix issues
-Hours in total | 24,5
+30.04.2021 | 5 | Work with styles and navbar
+Hours in total | 29,5

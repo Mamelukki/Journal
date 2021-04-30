@@ -4,6 +4,7 @@ import loginService from '../services/login'
 import { login } from '../reducers/loginReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import storage from '../utils/storage'
+import { Link } from 'react-router-dom'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -25,13 +26,15 @@ const LoginForm = () => {
     setPassword('')
   }
 
-  return(
+  return (
     <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      <h2 style={{ textTransform: 'uppercase' }}>Login</h2>
+      <div>No account yet? <Link to="/register">Register here.</Link></div>
+      <br></br>
+      <form onSubmit={handleLogin} >
         <div>
-            Username
-          <input
+          <div>Username</div>
+          <input style={{ width: '30%' }}
             type="text"
             value={username}
             name="Username"
@@ -39,15 +42,18 @@ const LoginForm = () => {
           />
         </div>
         <div>
-          Password
-          <input
+          <div>Password</div>
+          <input style={{ width: '30%' }}
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <br></br>
+        <div>
+          <button className='login-button' type="submit">Login</button>
+        </div>
       </form>
     </div>
   )

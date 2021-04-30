@@ -18,7 +18,7 @@ journalEntriesRouter.post('/', async (request, response) => {
   const journalEntry = new JournalEntry({
     content: body.content,
     date: new Date(),
-    user: user._id
+    user: user
   })
 
   const savedJournalEntry = await journalEntry.save()
