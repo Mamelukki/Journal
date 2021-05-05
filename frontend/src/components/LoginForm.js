@@ -4,10 +4,11 @@ import loginService from '../services/login'
 import { login } from '../reducers/loginReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import storage from '../utils/storage'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -18,8 +19,9 @@ const LoginForm = () => {
       const user = await loginService.login({ username, password })
       dispatch(login(user))
       storage.saveUser(user)
-      dispatch(addNotification(`${username} logged in`, 'success', 5))
-    } catch (error) {
+      dispatch(addNotification(`${user.username} logged in`, 'success', 5))
+      history.push('/journalEntries')
+    } catch (exception) {
       dispatch(addNotification('Wrong username or password', 'error', 5))
     }
     setUsername('')

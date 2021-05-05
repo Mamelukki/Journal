@@ -14,7 +14,7 @@ const JournalEntryForm = () => {
       const newJournalEntry = await journalEntryService.createNew({ content })
       dispatch(addJournalEntry(newJournalEntry))
       dispatch(addNotification('New journal entry added', 'success', 5))
-    } catch (error) {
+    } catch (exception) {
       dispatch(addNotification('Only logged in users can add journal entries', 'error', 5))
     }
     setContent('')
@@ -25,8 +25,8 @@ const JournalEntryForm = () => {
       <h4>Add journal entry</h4>
       <form onSubmit={handleSubmit}>
         <div>
-          Content
-          <input
+          <div>Content</div>
+          <textarea
             id='content'
             value={content}
             onChange={({ target }) => setContent(target.value)}

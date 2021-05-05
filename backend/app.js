@@ -26,6 +26,8 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
+app.use('/uploads', express.static('uploads'))
+
 app.use('/api/journalEntries', journalEntriesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)

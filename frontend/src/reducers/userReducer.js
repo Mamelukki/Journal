@@ -21,12 +21,11 @@ export const initializeUsers = () => {
   }
 }
 
-export const addUser = (username, password) => {
+export const addUser = (user) => {
   return async dispatch => {
-    const newUser = await userService.createNew(username, password)
     dispatch({
       type: 'ADD_USER',
-      data: newUser
+      data: user
     })
   }
 }

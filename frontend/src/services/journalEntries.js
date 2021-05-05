@@ -26,8 +26,16 @@ const remove = async (id) => {
   return response.data
 }
 
+const addImage = (id, formData) => {
+  console.log(`service: ${formData}`)
+  const request = axios.post(`${baseUrl}/${id}/images`, formData, getConfig())
+  console.log(request.then(response => response.data))
+  return request.then(response => response.data)
+}
+
 export default {
   getAll,
   createNew,
-  remove
+  remove,
+  addImage
 }

@@ -6,6 +6,8 @@ const journalEntryReducer = (state = [], action) => {
     return action.data
   case 'ADD_JOURNAL_ENTRY':
     return [...state, action.data]
+  case 'ADD_IMAGE':
+    return state.map(journalEntry => journalEntry.id === action.data.id ? action.data : journalEntry)
   case 'REMOVE_JOURNAL_ENTRY':
     return state.filter(journalEntry => journalEntry.id !== action.data)
   default:
@@ -27,6 +29,16 @@ export const addJournalEntry = (journalEntry) => {
   return async dispatch => {
     dispatch({
       type: 'ADD_JOURNAL_ENTRY',
+      data: journalEntry
+    })
+  }
+}
+
+export const addImage = (journalEntry) => {
+  console.log(`täällä? ${journalEntry.image}`)
+  return async dispatch => {
+    dispatch({
+      type: 'ADD_IMAGE',
       data: journalEntry
     })
   }

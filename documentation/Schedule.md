@@ -12,4 +12,5 @@ Date | Hours | Description
 20.04.2021 | 0,5 | Start using notifications
 26.04.2021 | 2 | Separate local storage from the login reducer and fix issues
 30.04.2021 | 5 | Work with styles and navbar
-Hours in total | 29,5
+05.05.2021 | 6 | Add a possibility for adding pictures into journal entries and show them to the user, fix smaller issues
+Hours in total | 35,5

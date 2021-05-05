@@ -13,7 +13,13 @@ const journalEntrySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  images: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Image'
+    }
+  ]
 })
 
 journalEntrySchema.set('toJSON', {
