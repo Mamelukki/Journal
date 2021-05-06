@@ -5,7 +5,7 @@ body {
 
 .navigation {
     text-transform: uppercase;
-    background-color:lightseagreen;
+    background-color: lightseagreen;
     padding: 25px;
     display: flex;
     justify-content: space-between;

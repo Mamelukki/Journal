@@ -5,6 +5,7 @@ import JournalEntryForm from './components/JournalEntryForm'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { login, logout } from './reducers/loginReducer'
@@ -25,7 +26,6 @@ function App() {
     dispatch(initializeUsers())
     const user = storage.loadUser()
     if (user) {
-      console.log(user)
       dispatch(login(user))
     }
   }, [dispatch])
@@ -49,6 +49,14 @@ function App() {
         </div>
       )
     }
+  }
+
+  const journalEntryForm = () => {
+    return (
+      <Togglable buttonLabel="New journal entry" iconName='calendar plus outline'>
+        <JournalEntryForm />
+      </Togglable>
+    )
   }
 
   return (
@@ -81,7 +89,7 @@ function App() {
           <Notification notification={notification} />
           <Switch>
             <Route path="/journalEntries">
-              <JournalEntryForm />
+              {journalEntryForm()}
               {printJournalEntries()}
             </Route>
             <Route path="/register">

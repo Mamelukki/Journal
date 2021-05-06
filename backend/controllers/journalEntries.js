@@ -45,11 +45,32 @@ journalEntriesRouter.post('/', async (request, response) => {
     user: user
   })
 
+  if (!journalEntry.content) {
+    return response.status(400).json({ error: 'Journal entry cannot be empty' })
+  }
+
   const savedJournalEntry = await journalEntry.save()
   user.journalEntries = user.journalEntries.concat(savedJournalEntry.id)
   await user.save()
 
   response.json(savedJournalEntry.toJSON())
+})
+
+journalEntriesRouter.put('/:id', async (request, response) => {
+  const journalEntry = request.body
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const user = await User.findById(decodedToken.id)
+  journalEntry.user = user
+
+  if (!journalEntry.content) {
+    return response.status(400).json({ error: 'Journal entry cannot be empty' })
+  }
+
+  const updatedJournalEntry = await JournalEntry
+    .findByIdAndUpdate(request.params.id, journalEntry, { new: true })
+    .populate('user')
+
+  response.json(updatedJournalEntry)
 })
 
 journalEntriesRouter.post('/:id/images', upload.single('image'), async (request, response) => {

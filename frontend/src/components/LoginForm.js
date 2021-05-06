@@ -17,15 +17,17 @@ const LoginForm = () => {
 
     try {
       const user = await loginService.login({ username, password })
+      setUsername('')
+      setPassword('')
       dispatch(login(user))
       storage.saveUser(user)
       dispatch(addNotification(`${user.username} logged in`, 'success', 5))
       history.push('/journalEntries')
     } catch (exception) {
+      setUsername('')
+      setPassword('')
       dispatch(addNotification('Wrong username or password', 'error', 5))
     }
-    setUsername('')
-    setPassword('')
   }
 
   return (

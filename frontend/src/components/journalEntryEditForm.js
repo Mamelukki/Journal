@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addJournalEntry } from '../reducers/journalEntryReducer'
+import { editJournalEntry } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 
-const JournalEntryForm = () => {
+const JournalEntryEditForm = ({ journalEntry }) => {
   const dispatch = useDispatch()
   const [content, setContent] = useState('')
 
-  const handleSubmit = async (event) => {
+  const handleEdit = async (event) => {
     event.preventDefault()
     try {
-      const newJournalEntry = await journalEntryService.createNew({ content })
-      dispatch(addJournalEntry(newJournalEntry))
-      dispatch(addNotification('New journal entry added', 'success', 5))
+      const id = journalEntry.id
+      const editedJournalEntry = await journalEntryService.edit({ id, content })
+      dispatch(editJournalEntry(editedJournalEntry))
+      dispatch(addNotification('Journal entry edited', 'success', 5))
     } catch (exception) {
       dispatch(addNotification(`${exception.response.data.error}`, 'error', 5))
     }
@@ -22,12 +23,12 @@ const JournalEntryForm = () => {
 
   return (
     <div>
-      <h4>Add journal entry</h4>
-      <form onSubmit={handleSubmit}>
+      <h4>Edit journal entry</h4>
+      <form onSubmit={handleEdit}>
         <div>
           <div>Content</div>
           <textarea
-            id='content'
+            id='editedContent'
             value={content}
             onChange={({ target }) => setContent(target.value)}
           />
@@ -38,4 +39,4 @@ const JournalEntryForm = () => {
   )
 }
 
-export default JournalEntryForm
+export default JournalEntryEditForm
