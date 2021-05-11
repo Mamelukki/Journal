@@ -1,13 +1,28 @@
 import journalEntryService from '../services/journalEntries'
+import { initializeUsers } from '../reducers/userReducer'
 
 const journalEntryReducer = (state = [], action) => {
   switch (action.type) {
   case 'INIT_JOURNAL_ENTRIES':
     return action.data
-  case 'ADD_JOURNAL_ENTRY':
+  case 'ADD_JOURNAL_ENTRY': {
+    const newState = [...state, action.data]
+    console.log(newState)
+    console.log(`täällä? ${action.data}`)
     return [...state, action.data]
+  }
   case 'EDIT_JOURNAL_ENTRY':
     return state.map(journalEntry => journalEntry.id === action.data.id ? action.data : journalEntry)
+  case 'ADD_IMAGE': {
+    const journalEntryToChange = state.find(journalEntry => journalEntry.id === action.data.journalEntry.id)
+    const journalEntryWithImage = {
+      ...journalEntryToChange,
+      images: journalEntryToChange.images.concat(action.data)
+    }
+    return state.map(journalEntry =>
+      journalEntry.id !== action.data.journalEntry.id ? journalEntry : journalEntryWithImage
+    )
+  }
   case 'REMOVE_JOURNAL_ENTRY':
     return state.filter(journalEntry => journalEntry.id !== action.data)
   default:
@@ -31,6 +46,7 @@ export const addJournalEntry = (journalEntry) => {
       type: 'ADD_JOURNAL_ENTRY',
       data: journalEntry
     })
+    dispatch(initializeUsers())
   }
 }
 
@@ -45,10 +61,10 @@ export const editJournalEntry = (journalEntry) => {
 }
 
 export const addImage = (journalEntry) => {
-  console.log(`täällä? ${journalEntry.image}`)
+  console.log(`täällä? ${journalEntry.id}`)
   return async dispatch => {
     dispatch({
-      type: 'EDIT_JOURNAL_ENTRY',
+      type: 'ADD_IMAGE',
       data: journalEntry
     })
   }
@@ -61,6 +77,7 @@ export const removeJournalEntry = (id) => {
       type: 'REMOVE_JOURNAL_ENTRY',
       data: id
     })
+    dispatch(initializeUsers())
   }
 }
 

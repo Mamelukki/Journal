@@ -15,7 +15,7 @@ export const initializeUsers = () => {
   return async dispatch => {
     const users = await userService.getAll()
     dispatch({
-      type: 'USERS',
+      type: 'INIT_USERS',
       data: users
     })
   }

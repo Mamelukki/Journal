@@ -32,9 +32,10 @@ const JournalEntry = ({ journalEntry }) => {
       const journalEntry = await journalEntryService.addImage(id, formData)
       dispatch(addImage(journalEntry))
       dispatch(addNotification('Image added', 'success', 5))
-      setSelectedImage('')
+      setSelectedImage(null)
     } catch (exception) {
       dispatch(addNotification('Image addition failed', 'error', 5))
+      setSelectedImage(null)
     }
   }
 
@@ -45,7 +46,6 @@ const JournalEntry = ({ journalEntry }) => {
       <div>
         <h4>{`${date}/${month}/${year}`}</h4>
         <p style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</p>
-        <p>Created by {journalEntry.user.username}</p>
         <Button basic color='red' icon={{ name: 'trash alternate outline' }} onClick={() => handleRemove(journalEntry.id)}></Button>
         <Togglable buttonLabel='Edit' iconName='edit outline' ><JournalEntryEditForm journalEntry={journalEntry} /></Togglable>
       </div>
@@ -63,7 +63,7 @@ const JournalEntry = ({ journalEntry }) => {
         {!journalEntry.images ? null :
           journalEntry.images.map(image =>
             <div key={image.id} >
-              <img style={{ border: '1px solid black' }} src={`${baseUrl}/${image.image}`} height={300} width={500} />
+              <img src={`${baseUrl}/${image.image}`} height={300} width={500} />
             </div>
           )}
       </div>

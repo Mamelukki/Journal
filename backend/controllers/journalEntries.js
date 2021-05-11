@@ -50,8 +50,9 @@ journalEntriesRouter.post('/', async (request, response) => {
   }
 
   const savedJournalEntry = await journalEntry.save()
-  user.journalEntries = user.journalEntries.concat(savedJournalEntry.id)
+  user.journalEntries = user.journalEntries.concat(savedJournalEntry._id)
   await user.save()
+  console.log(user)
 
   response.json(savedJournalEntry.toJSON())
 })
@@ -69,6 +70,7 @@ journalEntriesRouter.put('/:id', async (request, response) => {
   const updatedJournalEntry = await JournalEntry
     .findByIdAndUpdate(request.params.id, journalEntry, { new: true })
     .populate('user')
+    .populate('images')
 
   response.json(updatedJournalEntry)
 })
@@ -85,7 +87,6 @@ journalEntriesRouter.post('/:id/images', upload.single('image'), async (request,
   journalEntry.images = journalEntry.images.concat(savedImage._id)
   
   await journalEntry.save()
-  console.log(journalEntry)
 
   response.status(201).json(savedImage)
 })
@@ -107,8 +108,8 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
   await Image.deleteMany({ journalEntry: request.params.id })
 
   await journalEntry.remove()
+  console.log(user.journalEntries.filter(journalEntry => journalEntry.toString() !== request.params.id.toString()))
   user.journalEntries = user.journalEntries.filter(journalEntry => journalEntry.id.toString() !== request.params.id.toString())
-
   await user.save()
 
   response.status(204).end()

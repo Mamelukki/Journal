@@ -14,4 +14,5 @@ Date | Hours | Description
 30.04.2021 | 5 | Work with styles and navbar
 05.05.2021 | 8 | Add a possibility for adding pictures into journal entries and show them to the user, fix smaller issues
 06.05.2021 | 5 | Add editing option for journal entries, fix bugs, do some styling
-Hours in total | 42,5
+11.05.2021 | 4 | Create profile view, bug fixing
+Hours in total | 46,5

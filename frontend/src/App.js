@@ -5,6 +5,7 @@ import JournalEntryForm from './components/JournalEntryForm'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import User from './components/User'
 import Togglable from './components/Togglable'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
@@ -18,6 +19,7 @@ import storage from './utils/storage'
 function App() {
   const dispatch = useDispatch()
   const journalEntries = useSelector(state => state.journalEntries)
+  const users = useSelector(state => state.users)
   const currentUser = useSelector(state => state.currentUser)
   const notification = useSelector(state => state.notification)
 
@@ -82,7 +84,7 @@ function App() {
             </div>
             :
             <div className='navigation-links'>
-              <em className='logged-user'>Welcome {currentUser.username} <button onClick={() => handleLogout()}>Logout</button></em>
+              <em className='logged-user'>Welcome <Link to={`users/${currentUser.id}`}>{currentUser.username}</Link> <button onClick={() => handleLogout()}>Logout</button></em>
             </div>}
         </div>
         <div style={{ marginLeft: '25px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
@@ -97,6 +99,9 @@ function App() {
             </Route>
             <Route path="/login">
               <LoginForm />
+            </Route>
+            <Route path="/users/:id">
+              <User users={users} />
             </Route>
             <Route path="/">
               <div>Welcome to Journal App</div>
