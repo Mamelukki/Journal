@@ -17,7 +17,7 @@ const JournalEntry = ({ journalEntry }) => {
   const id = journalEntry.id
 
   const handleRemove = (id) => {
-    const confirm = window.confirm('Are you sure you want to remove this journal entry?')
+    const confirm = window.confirm('Are you sure you want to remove this journal entry? Confirming will also delete the images of this journal entry.')
     if (confirm) {
       dispatch(removeJournalEntry(id))
     }
@@ -38,8 +38,6 @@ const JournalEntry = ({ journalEntry }) => {
       setSelectedImage(null)
     }
   }
-
-  const baseUrl = 'http://localhost:3001'
 
   return (
     <div className='journal-entry' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', border: '1px  solid black', backgroundColor: 'azure', padding: '10px', marginBottom: '10px' }}>
@@ -63,7 +61,9 @@ const JournalEntry = ({ journalEntry }) => {
         {!journalEntry.images ? null :
           journalEntry.images.map(image =>
             <div key={image.id} >
-              <img src={`${baseUrl}/${image.image}`} height={300} width={500} />
+              {console.log(image.imageUrl)}
+              {console.log(image)}
+              <img src={`${image.imageUrl}`} height={300} width={500} />
             </div>
           )}
       </div>

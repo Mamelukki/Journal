@@ -3,33 +3,14 @@ const JournalEntry = require('../models/journalEntry')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const Image = require('../models/image')
-const multer = require('multer')
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads')
-  },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname)
-  }
-})
-
-const fileFilter = (req, file, cb) => {
-  console.log(file)
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
-    cb(null, true)
-  } else {
-    cb(new Error('Wrong file type, make sure the image is either in .jpeg, .jpg or .png format'), false)
-  }
-}
-
-const upload = multer({ storage: storage, fileFilter: fileFilter })
+const cloudinary = require('../utils/cloudinary')
+const upload = require('../utils/multer')
 
 journalEntriesRouter.get('/', async (request, response) => {
   const journalEntries = await JournalEntry
     .find({})
     .populate('user', { username: 1 })
-    .populate('images', { image: 1 })
+    .populate('images', {  imageUrl: 1, cloudinaryId: 1 })
   response.json(journalEntries.map(journalEntry => journalEntry.toJSON()))
 })
 
@@ -77,8 +58,11 @@ journalEntriesRouter.put('/:id', async (request, response) => {
 
 journalEntriesRouter.post('/:id/images', upload.single('image'), async (request, response) => {
   const journalEntry = await JournalEntry.findById(request.params.id)
+  const cloudinaryImage = await cloudinary.uploader.upload(request.file.path)
+  
   const image = new Image({
-    image: request.file.path,
+    imageUrl: cloudinaryImage.secure_url,
+    cloudinaryId: cloudinaryImage.public_id,
     journalEntry: journalEntry
   })
 
@@ -99,11 +83,17 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
   }
 
   const user = await User.findById(decodedToken.id)
-  const journalEntry = await JournalEntry.findById(request.params.id)
+  const journalEntry = await JournalEntry.findById(request.params.id).populate('images', {  imageUrl: 1, cloudinaryId: 1 })
 
   if (journalEntry.user.toString() !== user.id.toString()) {
     return response.status(401).json({ error: 'Only the creator can delete the journal entry' })
   }
+
+  // go through the images attached to the journal entry and delete all of them
+  await Promise.all(journalEntry.images.map(async image => {
+    await cloudinary.uploader.destroy(image.cloudinaryId)
+    console.log(image.cloudinaryId)
+  }))
 
   await Image.deleteMany({ journalEntry: request.params.id })
 
