@@ -33,7 +33,6 @@ const remove = async (id) => {
 }
 
 const addImage = (id, formData) => {
-  console.log(`service: ${formData}`)
   const request = axios.post(`${baseUrl}/${id}/images`, formData, getConfig())
   return request.then(response => response.data)
 }

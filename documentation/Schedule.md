@@ -16,4 +16,5 @@ Date | Hours | Description
 06.05.2021 | 5 | Add editing option for journal entries, fix bugs, do some styling
 11.05.2021 | 4 | Create profile view, bug fixing
 12.05.2021 | 6 | Store the uploaded images to Cloudinary (instead of local uploads folder), do the required changes to controllers and image model, refactor (move multer to its own module)
-Hours in total | 52,5
+13.05.2021 | 2 | Improve usability (hide edit and add forms after submit, show existing content while editing, reset chosen file after upload and show more messages)
+Hours in total | 54,5

@@ -4,12 +4,13 @@ import { addJournalEntry } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 
-const JournalEntryForm = () => {
+const JournalEntryForm = ({ journalEntryAddFormRef }) => {
   const dispatch = useDispatch()
   const [content, setContent] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    journalEntryAddFormRef.current.toggleVisibility()
     try {
       const newJournalEntry = await journalEntryService.createNew({ content })
       dispatch(addJournalEntry(newJournalEntry))

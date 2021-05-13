@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { removeJournalEntry, addImage } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
@@ -15,6 +15,7 @@ const JournalEntry = ({ journalEntry }) => {
   const year = fullDate.getFullYear()
   const [selectedImage, setSelectedImage] = useState('')
   const id = journalEntry.id
+  const journalEditFormRef = useRef()
 
   const handleRemove = (id) => {
     const confirm = window.confirm('Are you sure you want to remove this journal entry? Confirming will also delete the images of this journal entry.')
@@ -26,14 +27,23 @@ const JournalEntry = ({ journalEntry }) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
+    if (!selectedImage || selectedImage === null) {
+      return (
+        dispatch(addNotification('Please choose an image before uploading', 'error', 5))
+      )
+    }
+
     try {
       const formData = new FormData()
+      document.getElementById('imageUpload').value = ''
       formData.append('image', selectedImage)
+      dispatch(addNotification('Image uploading, please wait a few seconds', 'success', 5))
       const journalEntry = await journalEntryService.addImage(id, formData)
       dispatch(addImage(journalEntry))
-      dispatch(addNotification('Image added', 'success', 5))
+      dispatch(addNotification('Image added successfully', 'success', 5))
       setSelectedImage(null)
     } catch (exception) {
+      document.getElementById('imageUpload').value = ''
       dispatch(addNotification('Image addition failed', 'error', 5))
       setSelectedImage(null)
     }
@@ -45,24 +55,25 @@ const JournalEntry = ({ journalEntry }) => {
         <h4>{`${date}/${month}/${year}`}</h4>
         <p style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</p>
         <Button basic color='red' icon={{ name: 'trash alternate outline' }} onClick={() => handleRemove(journalEntry.id)}></Button>
-        <Togglable buttonLabel='Edit' iconName='edit outline' ><JournalEntryEditForm journalEntry={journalEntry} /></Togglable>
+        <Togglable buttonLabel='Edit' iconName='edit outline' ref={journalEditFormRef} >
+          <JournalEntryEditForm journalEntry={journalEntry} journalEditFormRef={journalEditFormRef} />
+        </Togglable>
       </div>
       <div>
         <h5>Add image</h5>
         <form onSubmit={handleSubmit}>
           <div>
             <input
+              id='imageUpload'
               type="file"
               onChange={(e) => setSelectedImage(e.target.files[0])}
             />
           </div>
-          <button type='submit'>Submit</button>
+          <button type='submit'>Add image</button>
         </form>
         {!journalEntry.images ? null :
           journalEntry.images.map(image =>
             <div key={image.id} >
-              {console.log(image.imageUrl)}
-              {console.log(image)}
               <img src={`${image.imageUrl}`} height={300} width={500} />
             </div>
           )}

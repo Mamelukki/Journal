@@ -4,12 +4,13 @@ import { editJournalEntry } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 
-const JournalEntryEditForm = ({ journalEntry }) => {
+const JournalEntryEditForm = ({ journalEntry, journalEditFormRef }) => {
   const dispatch = useDispatch()
   const [content, setContent] = useState('')
 
   const handleEdit = async (event) => {
     event.preventDefault()
+    journalEditFormRef.current.toggleVisibility()
     try {
       const id = journalEntry.id
       const editedJournalEntry = await journalEntryService.edit({ id, content })
@@ -29,7 +30,7 @@ const JournalEntryEditForm = ({ journalEntry }) => {
           <div>Content</div>
           <textarea
             id='editedContent'
-            value={content}
+            value={!content ? setContent(journalEntry.content) : content}
             onChange={({ target }) => setContent(target.value)}
           />
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import JournalEntry from './components/JournalEntry'
 import JournalEntryForm from './components/JournalEntryForm'
@@ -22,6 +22,7 @@ function App() {
   const users = useSelector(state => state.users)
   const currentUser = useSelector(state => state.currentUser)
   const notification = useSelector(state => state.notification)
+  const journalEntryAddFormRef = useRef()
 
   useEffect(() => {
     dispatch(initializeJournalEntries())
@@ -55,8 +56,8 @@ function App() {
 
   const journalEntryForm = () => {
     return (
-      <Togglable buttonLabel="New journal entry" iconName='calendar plus outline'>
-        <JournalEntryForm />
+      <Togglable buttonLabel="New journal entry" iconName='calendar plus outline' ref={journalEntryAddFormRef}>
+        <JournalEntryForm journalEntryAddFormRef={journalEntryAddFormRef}/>
       </Togglable>
     )
   }
