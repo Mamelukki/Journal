@@ -6,20 +6,23 @@ import journalEntryService from '../services/journalEntries'
 
 const JournalEntryEditForm = ({ journalEntry, journalEditFormRef }) => {
   const dispatch = useDispatch()
-  const [content, setContent] = useState('')
+  const [content, setContent] = useState(journalEntry.content)
 
   const handleEdit = async (event) => {
     event.preventDefault()
     journalEditFormRef.current.toggleVisibility()
+
     try {
       const id = journalEntry.id
       const editedJournalEntry = await journalEntryService.edit({ id, content })
       dispatch(editJournalEntry(editedJournalEntry))
       dispatch(addNotification('Journal entry edited', 'success', 5))
     } catch (exception) {
+      if (!content) {
+        setContent(journalEntry.content)
+      }
       dispatch(addNotification(`${exception.response.data.error}`, 'error', 5))
     }
-    setContent('')
   }
 
   return (
@@ -30,7 +33,7 @@ const JournalEntryEditForm = ({ journalEntry, journalEditFormRef }) => {
           <div>Content</div>
           <textarea
             id='editedContent'
-            value={!content ? setContent(journalEntry.content) : content}
+            value={content}
             onChange={({ target }) => setContent(target.value)}
           />
         </div>

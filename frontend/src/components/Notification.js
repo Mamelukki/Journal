@@ -7,14 +7,14 @@ const Notification = ({ notification }) => {
 
   if (notification.messageType === 'error') {
     return (
-      <div style={{ marginBottom: '20px', padding: '20px', backgroundColor: 'tomato', color: 'white' }}>
+      <div style={{ position: 'fixed', top: '0', left: '0', right: '0', zIndex: '0', backgroundColor: 'tomato', padding: '10px', color: 'white' }}>
         {notification.message}
       </div>
     )
   }
 
   return (
-    <div style={{ marginBottom: '20px', padding: '20px', backgroundColor: 'seagreen', color: 'white' }}>
+    <div style={{ position: 'fixed', top: '0', left: '0', right: '0', zIndex: '0', backgroundColor: 'green', padding: '10px', color: 'white' }}>
       {notification.message}
     </div>
   )

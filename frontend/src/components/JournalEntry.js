@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { removeJournalEntry, addImage } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
-import JournalEntryEditForm from './journalEntryEditForm'
+import JournalEntryEditForm from './JournalEntryEditForm'
 import Togglable from './Togglable'
 import { Button } from 'semantic-ui-react'
 
