@@ -1,11 +1,12 @@
 body {
     margin: 0px;
-    font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif
+    font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif;
+    background-color:seashell;
 }
 
 .navigation {
     text-transform: uppercase;
-    background-color: lightseagreen;
+    background-color: lightsteelblue;
     padding: 25px;
     display: flex;
     justify-content: space-between;

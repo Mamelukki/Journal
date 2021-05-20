@@ -21,10 +21,16 @@ journalEntriesRouter.post('/', async (request, response) => {
   const user = await User.findById(decodedToken.id)
 
   const journalEntry = new JournalEntry({
+    title: body.title,
     content: body.content,
+    feelings: body.feelings,
     date: new Date(),
     user: user
   })
+
+  if (!journalEntry.title) {
+    return response.status(400).json({ error: 'Journal entry must have a title' })
+  }
 
   if (!journalEntry.content) {
     return response.status(400).json({ error: 'Journal entry cannot be empty' })
@@ -59,7 +65,7 @@ journalEntriesRouter.put('/:id', async (request, response) => {
 journalEntriesRouter.post('/:id/images', upload.single('image'), async (request, response) => {
   const journalEntry = await JournalEntry.findById(request.params.id)
   const cloudinaryImage = await cloudinary.uploader.upload(request.file.path)
-  
+
   const image = new Image({
     imageUrl: cloudinaryImage.secure_url,
     cloudinaryId: cloudinaryImage.public_id,
@@ -69,7 +75,7 @@ journalEntriesRouter.post('/:id/images', upload.single('image'), async (request,
   const savedImage = await image.save()
 
   journalEntry.images = journalEntry.images.concat(savedImage._id)
-  
+
   await journalEntry.save()
 
   response.status(201).json(savedImage)

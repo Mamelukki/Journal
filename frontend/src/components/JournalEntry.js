@@ -6,8 +6,14 @@ import journalEntryService from '../services/journalEntries'
 import JournalEntryEditForm from './JournalEntryEditForm'
 import Togglable from './Togglable'
 import { Button } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom'
 
 const JournalEntry = ({ journalEntry }) => {
+  if (!journalEntry) {
+    return null
+  }
+
+  const history = useHistory()
   const dispatch = useDispatch()
   const fullDate = new Date(journalEntry.date)
   const date = fullDate.getDate()
@@ -21,6 +27,7 @@ const JournalEntry = ({ journalEntry }) => {
     const confirm = window.confirm('Are you sure you want to remove this journal entry? Confirming will also delete the images of this journal entry.')
     if (confirm) {
       dispatch(removeJournalEntry(id))
+      history.push('/journalEntries')
     }
   }
 
@@ -50,12 +57,14 @@ const JournalEntry = ({ journalEntry }) => {
   }
 
   return (
-    <div className='journal-entry' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', border: '1px  solid black', backgroundColor: 'azure', padding: '10px', marginBottom: '10px' }}>
+    <div className='journal-entry' style={{ backgroundColor: 'white', padding: '10px', marginBottom: '10px' }}>
       <div>
         <h4>{`${date}/${month}/${year}`}</h4>
-        <p style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</p>
-        <Button basic color='red' icon={{ name: 'trash alternate outline' }} onClick={() => handleRemove(journalEntry.id)}></Button>
-        <Togglable buttonLabel='Edit' iconName='edit outline' ref={journalEditFormRef} >
+        <h2>{journalEntry.title}</h2>
+        <h4>Your feelings today: {journalEntry.feelings}</h4>
+        <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
+        <Button basic color='red' onClick={() => handleRemove(journalEntry.id)}>Remove journal entry</Button>
+        <Togglable buttonLabel='Edit' ref={journalEditFormRef} >
           <JournalEntryEditForm journalEntry={journalEntry} journalEditFormRef={journalEditFormRef} />
         </Togglable>
       </div>
@@ -71,12 +80,14 @@ const JournalEntry = ({ journalEntry }) => {
           </div>
           <button type='submit'>Add image</button>
         </form>
-        {!journalEntry.images ? null :
-          journalEntry.images.map(image =>
-            <div key={image.id} >
-              <img src={`${image.imageUrl}`} height={300} width={500} />
-            </div>
-          )}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', marginRight: '5px', marginLeft: '5px' }}>
+          {!journalEntry.images ? null :
+            journalEntry.images.map(image =>
+              <div key={image.id} >
+                <img src={`${image.imageUrl}`} height={'auto'} width={'100%'} maxwidth={'400px'} />
+              </div>
+            )}
+        </div>
       </div>
     </div>
   )

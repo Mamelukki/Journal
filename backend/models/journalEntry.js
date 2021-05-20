@@ -1,11 +1,17 @@
 const mongoose = require('mongoose')
 
 const journalEntrySchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    minlength: 3
+  },
   content: {
     type: String,
     required: true,
     minlength: 3
   },
+  feelings: String,
   date: {
     type: Date,
     required: true
