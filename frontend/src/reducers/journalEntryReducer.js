@@ -5,12 +5,8 @@ const journalEntryReducer = (state = [], action) => {
   switch (action.type) {
   case 'INIT_JOURNAL_ENTRIES':
     return action.data
-  case 'ADD_JOURNAL_ENTRY': {
-    const newState = [...state, action.data]
-    console.log(newState)
-    console.log(`täällä? ${action.data}`)
+  case 'ADD_JOURNAL_ENTRY':
     return [...state, action.data]
-  }
   case 'EDIT_JOURNAL_ENTRY':
     return state.map(journalEntry => journalEntry.id === action.data.id ? action.data : journalEntry)
   case 'ADD_IMAGE': {

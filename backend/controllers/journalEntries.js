@@ -47,6 +47,11 @@ journalEntriesRouter.post('/', async (request, response) => {
 journalEntriesRouter.put('/:id', async (request, response) => {
   const journalEntry = request.body
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({ error: 'Token missing or invalid' })
+  }
+
   const user = await User.findById(decodedToken.id)
   journalEntry.user = user
 
@@ -64,12 +69,20 @@ journalEntriesRouter.put('/:id', async (request, response) => {
 
 journalEntriesRouter.post('/:id/images', upload.single('image'), async (request, response) => {
   const journalEntry = await JournalEntry.findById(request.params.id)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({ error: 'Token missing or invalid' })
+  }
+  
+  const user = await User.findById(decodedToken.id)
   const cloudinaryImage = await cloudinary.uploader.upload(request.file.path)
 
   const image = new Image({
     imageUrl: cloudinaryImage.secure_url,
     cloudinaryId: cloudinaryImage.public_id,
-    journalEntry: journalEntry
+    journalEntry: journalEntry,
+    user: user
   })
 
   const savedImage = await image.save()
@@ -77,6 +90,9 @@ journalEntriesRouter.post('/:id/images', upload.single('image'), async (request,
   journalEntry.images = journalEntry.images.concat(savedImage._id)
 
   await journalEntry.save()
+
+  user.images = user.images.concat(savedImage._id)
+  await user.save()
 
   response.status(201).json(savedImage)
 })
@@ -98,13 +114,11 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
   // go through the images attached to the journal entry and delete all of them
   await Promise.all(journalEntry.images.map(async image => {
     await cloudinary.uploader.destroy(image.cloudinaryId)
-    console.log(image.cloudinaryId)
   }))
 
   await Image.deleteMany({ journalEntry: request.params.id })
 
   await journalEntry.remove()
-  console.log(user.journalEntries.filter(journalEntry => journalEntry.toString() !== request.params.id.toString()))
   user.journalEntries = user.journalEntries.filter(journalEntry => journalEntry.id.toString() !== request.params.id.toString())
   await user.save()
 

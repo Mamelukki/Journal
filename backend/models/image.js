@@ -12,6 +12,10 @@ const imageSchema = new mongoose.Schema({
   journalEntry: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'JournalEntry'
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
