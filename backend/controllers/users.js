@@ -9,7 +9,7 @@ const cloudinary = require('../utils/cloudinary')
 usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
-    .populate('journalEntries', { content: 1 })
+    .populate('journalEntries', { title: 1, content: 1, feelings: 1, date: 1 })
   response.json(users.map(user => user.toJSON()))
 })
 

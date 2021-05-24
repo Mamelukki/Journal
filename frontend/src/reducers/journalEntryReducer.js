@@ -47,7 +47,6 @@ export const addJournalEntry = (journalEntry) => {
 }
 
 export const editJournalEntry = (journalEntry) => {
-  console.log(`edit: ${journalEntry.content}`)
   return async dispatch => {
     dispatch({
       type: 'EDIT_JOURNAL_ENTRY',
@@ -57,7 +56,6 @@ export const editJournalEntry = (journalEntry) => {
 }
 
 export const addImage = (journalEntry) => {
-  console.log(`täällä? ${journalEntry.id}`)
   return async dispatch => {
     dispatch({
       type: 'ADD_IMAGE',

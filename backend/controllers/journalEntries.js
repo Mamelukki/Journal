@@ -39,9 +39,8 @@ journalEntriesRouter.post('/', async (request, response) => {
   const savedJournalEntry = await journalEntry.save()
   user.journalEntries = user.journalEntries.concat(savedJournalEntry._id)
   await user.save()
-  console.log(user)
 
-  response.json(savedJournalEntry.toJSON())
+  response.status(201).json(savedJournalEntry.toJSON())
 })
 
 journalEntriesRouter.put('/:id', async (request, response) => {
@@ -114,12 +113,13 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
   // go through the images attached to the journal entry and delete all of them
   await Promise.all(journalEntry.images.map(async image => {
     await cloudinary.uploader.destroy(image.cloudinaryId)
+    user.images = user.images.filter(userImage => userImage.toString() !== image.id.toString())
   }))
 
   await Image.deleteMany({ journalEntry: request.params.id })
 
   await journalEntry.remove()
-  user.journalEntries = user.journalEntries.filter(journalEntry => journalEntry.id.toString() !== request.params.id.toString())
+  user.journalEntries = user.journalEntries.filter(journalEntry => journalEntry.toString() !== request.params.id.toString())
   await user.save()
 
   response.status(204).end()
