@@ -21,4 +21,5 @@ Date | Hours | Description
 20.05.2021 | 5 | Fix user info route, create list component for journal entries and add possibility to view single journal entries, create test database and add two tests for the backend
 21.05.2021 | 3 | Add possibility to remove user
 24.05.2021 | 4 | Fix bugs in the backend controllers, create more tests for the backend
-Hours in total | 67
+24.05.2021 | 3 | Improve tests (check also user's data in journal entry addition and deletion tests) and add one new test
+Hours in total | 70

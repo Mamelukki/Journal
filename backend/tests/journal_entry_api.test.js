@@ -42,8 +42,9 @@ describe('When some blogs are saved', () => {
   })
 })
 
-describe('When a user is logged in', () => {
+describe('When user is logged in', () => {
   let headers
+  let userId
 
   beforeEach(async () => {
     // create user and login
@@ -63,6 +64,8 @@ describe('When a user is logged in', () => {
     headers = {
       'Authorization': `bearer ${result.body.token}`
     }
+
+    userId = result.body.id
   })
 
   test('a journal entry can be added', async () => {
@@ -87,6 +90,12 @@ describe('When a user is logged in', () => {
     expect(titles).toContain(
       'Feeling happy'
     )
+
+    users = await helper.usersInDb()
+    user = users.find(user => user.id === userId)
+
+    const userJournalEntries = user.journalEntries.map(journalEntry => journalEntry.toString())
+    expect(userJournalEntries).toContain(journalEntriesAtEnd[journalEntriesAtEnd.length - 1].id)
   })
 
   test('a journal entry can be deleted by its creator', async () => {
@@ -118,6 +127,34 @@ describe('When a user is logged in', () => {
     expect(titles).not.toContain(
       'Meeting up with friends'
     )
+
+    // check that user doesn't have the deleted journal entry anymore
+
+    users = await helper.usersInDb()
+    user = users.find(user => user.id === userId)
+
+    const userJournalEntries = user.journalEntries.map(journalEntry => journalEntry.toString())
+    expect(userJournalEntries).not.toContain(journalEntryToDelete.id)
+  })
+})
+
+describe('When user is not logged in', () => {
+  test('a journal entry cannot be added', async () => {
+    const journalEntriesAtStart = await helper.journalEntriesInDb()
+    const newJournalEntry = {
+      title: 'Meeting up with friends',
+      content: 'I met some friends today after a long time and was great to catch up with them again. We agreed to meet next week too!',
+      feelings: 'Content',
+      date: new Date()
+    }
+
+    await api
+      .post('/api/journalEntries')
+      .send(newJournalEntry)
+      .expect(401)
+
+    const journalEntriesAtEnd = await helper.journalEntriesInDb()
+    expect(journalEntriesAtEnd.length).toBe(journalEntriesAtStart.length)
   })
 })
 
