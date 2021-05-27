@@ -5,7 +5,8 @@ import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 import JournalEntryEditForm from './JournalEntryEditForm'
 import Togglable from './Togglable'
-import { Button } from 'semantic-ui-react'
+import { Button } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 import { useHistory } from 'react-router-dom'
 
 const JournalEntry = ({ journalEntry }) => {
@@ -59,14 +60,14 @@ const JournalEntry = ({ journalEntry }) => {
   return (
     <div className='journal-entry' style={{ backgroundColor: 'white', padding: '10px', marginBottom: '10px' }}>
       <div>
+        <Button variant='contained' color='secondary' startIcon={<DeleteIcon />} onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
+        <Togglable buttonLabel='Edit' ref={journalEditFormRef} >
+          <JournalEntryEditForm journalEntry={journalEntry} journalEditFormRef={journalEditFormRef} />
+        </Togglable>
         <h4>{`${date}/${month}/${year}`}</h4>
         <h2>{journalEntry.title}</h2>
         <h4>Your feelings today: {journalEntry.feelings}</h4>
         <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
-        <Button basic color='red' onClick={() => handleRemove(journalEntry.id)}>Remove journal entry</Button>
-        <Togglable buttonLabel='Edit' ref={journalEditFormRef} >
-          <JournalEntryEditForm journalEntry={journalEntry} journalEditFormRef={journalEditFormRef} />
-        </Togglable>
       </div>
       <div>
         <h5>Add image</h5>

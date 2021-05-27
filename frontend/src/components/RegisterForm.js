@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addUser } from '../reducers/userReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import userService from '../services/users'
+import { TextField, Button } from '@material-ui/core'
 
 const registerForm = () => {
   const dispatch = useDispatch()
@@ -24,17 +25,19 @@ const registerForm = () => {
 
   return (
     <div>
-      <h4>Create account</h4>
+      <h2>Create account</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          Username
-          <input name='username' />
+          <TextField label='Username'
+            name='username' />
         </div>
         <div>
-          Password
-          <input name='password' type='password' />
+          <TextField label='Password'
+            name='password'
+            type='password' />
         </div>
-        <button type='submit'>Register</button>
+        <br></br>
+        <Button variant='contained' color='primary' type='submit'>Register</Button>
       </form>
     </div>
   )

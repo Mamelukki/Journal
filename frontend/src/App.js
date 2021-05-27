@@ -1,13 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import JournalEntry from './components/JournalEntry'
-import JournalEntryForm from './components/JournalEntryForm'
 import JournalEntryList from './components/JournalEntryList'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import User from './components/User'
-import Togglable from './components/Togglable'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { login, logout } from './reducers/loginReducer'
@@ -15,6 +13,7 @@ import {
   Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
 import storage from './utils/storage'
+import Container from '@material-ui/core/Container'
 
 function App() {
   const dispatch = useDispatch()
@@ -22,7 +21,6 @@ function App() {
   const users = useSelector(state => state.users)
   const currentUser = useSelector(state => state.currentUser)
   const notification = useSelector(state => state.notification)
-  const journalEntryAddFormRef = useRef()
   const match = useRouteMatch('/journalEntries/:id')
   const journalEntry = match
     ? journalEntries.find(journalEntry => journalEntry.id === match.params.id)
@@ -42,16 +40,8 @@ function App() {
     storage.logoutUser()
   }
 
-  const journalEntryForm = () => {
-    return (
-      <Togglable buttonLabel="New journal entry" ref={journalEntryAddFormRef}>
-        <JournalEntryForm journalEntryAddFormRef={journalEntryAddFormRef} />
-      </Togglable>
-    )
-  }
-
   return (
-    <div className='container'>
+    <Container>
       <div className='navigation'>
         <div className='navigation-links'>
           <div className='journal-link' >
@@ -82,7 +72,6 @@ function App() {
             <JournalEntry journalEntry={journalEntry} />
           </Route>
           <Route path="/journalEntries">
-            {journalEntryForm()}
             <JournalEntryList currentUser={currentUser} journalEntries={journalEntries} />
           </Route>
           <Route path="/register">
@@ -98,7 +87,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </div>
+    </Container>
   )
 }
 

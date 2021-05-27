@@ -5,6 +5,7 @@ import { login } from '../reducers/loginReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import storage from '../utils/storage'
 import { Link, useHistory } from 'react-router-dom'
+import { TextField, Button } from '@material-ui/core'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -32,13 +33,12 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h2 style={{ textTransform: 'uppercase' }}>Login</h2>
-      <div>No account yet? <Link to="/register">Register here.</Link></div>
+      <h2>Login</h2>
+      <div>New to us? <Link to="/register">Register here.</Link></div>
       <br></br>
       <form onSubmit={handleLogin} >
         <div>
-          <div>Username</div>
-          <input style={{ width: '30%' }}
+          <TextField label='Username'
             type="text"
             value={username}
             name="Username"
@@ -46,8 +46,7 @@ const LoginForm = () => {
           />
         </div>
         <div>
-          <div>Password</div>
-          <input style={{ width: '30%' }}
+          <TextField label='Password'
             type="password"
             value={password}
             name="Password"
@@ -56,7 +55,7 @@ const LoginForm = () => {
         </div>
         <br></br>
         <div>
-          <button className='login-button' type="submit">Login</button>
+          <Button variant='contained' color='primary' className='login-button' type="submit">Login</Button>
         </div>
       </form>
     </div>

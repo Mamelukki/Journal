@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addJournalEntry } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
+import { TextField, Button } from '@material-ui/core'
 
 const JournalEntryForm = ({ journalEntryAddFormRef }) => {
   const dispatch = useDispatch()
@@ -28,29 +29,33 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
 
   return (
     <div>
-      <h4>How was your day?</h4>
+      <h3>How was your day?</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <div>Title</div>
-          <input
-            id='title'
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
-          <div>Feelings</div>
-          <input
-            id='feelings'
-            value={feelings}
-            onChange={({ target }) => setFeelings(target.value)}
-          />
-          <div>Content</div>
-          <textarea
-            id='content'
-            value={content}
-            onChange={({ target }) => setContent(target.value)}
-          />
+          <div>
+            <TextField label='Title' fullWidth
+              id='title'
+              value={title}
+              onChange={({ target }) => setTitle(target.value)}
+            />
+          </div>
+          <div>
+            <TextField label='Feelings' fullWidth
+              id='feelings'
+              value={feelings}
+              onChange={({ target }) => setFeelings(target.value)}
+            />
+          </div>
+          <div>
+            <TextField multiline label='Content' rows={7} fullWidth
+              id='content'
+              value={content}
+              onChange={({ target }) => setContent(target.value)}
+            />
+          </div>
         </div>
-        <button type='submit'>Submit</button>
+        <br></br>
+        <Button variant='contained' color='primary' type='submit'>Submit</Button>
       </form>
     </div>
   )

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { editJournalEntry } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
+import { TextField, Button } from '@material-ui/core'
 
 const JournalEntryEditForm = ({ journalEntry, journalEditFormRef }) => {
   const dispatch = useDispatch()
@@ -31,13 +32,13 @@ const JournalEntryEditForm = ({ journalEntry, journalEditFormRef }) => {
       <form onSubmit={handleEdit}>
         <div>
           <div>Content</div>
-          <textarea
+          <TextField multiline rows={7} fullWidth
             id='editedContent'
             value={content}
             onChange={({ target }) => setContent(target.value)}
           />
         </div>
-        <button type='submit'>Submit</button>
+        <Button variant='contained' color='primary' type='submit'>Submit</Button>
       </form>
     </div>
   )
