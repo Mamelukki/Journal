@@ -91,9 +91,10 @@ describe('When user is logged in', () => {
       'Feeling happy'
     )
 
-    users = await helper.usersInDb()
-    user = users.find(user => user.id === userId)
+    const users = await helper.usersInDb()
+    const user = users.find(user => user.id === userId)
 
+    // check that user has the new journal entry
     const userJournalEntries = user.journalEntries.map(journalEntry => journalEntry.toString())
     expect(userJournalEntries).toContain(journalEntriesAtEnd[journalEntriesAtEnd.length - 1].id)
   })
@@ -111,7 +112,7 @@ describe('When user is logged in', () => {
       .post('/api/journalEntries')
       .send(newJournalEntry)
       .set(headers)
-    
+
     const journalEntryToDelete = response.body
 
     const journalEntriesAtStart = await helper.journalEntriesInDb()
@@ -128,13 +129,72 @@ describe('When user is logged in', () => {
       'Meeting up with friends'
     )
 
-    // check that user doesn't have the deleted journal entry anymore
-
-    users = await helper.usersInDb()
-    user = users.find(user => user.id === userId)
+    // check that user doesn't have the deleted journal entry
+    const users = await helper.usersInDb()
+    const user = users.find(user => user.id === userId)
 
     const userJournalEntries = user.journalEntries.map(journalEntry => journalEntry.toString())
     expect(userJournalEntries).not.toContain(journalEntryToDelete.id)
+  })
+
+  test('a journal entry can be edited by its creator', async () => {
+    const newJournalEntry = {
+      title: 'Meeting up with friends',
+      content: 'I met some friends today after a long time and was great to catch up with them again. We agreed to meet next week too!',
+      feelings: 'Content',
+      date: new Date()
+    }
+
+    await api
+      .post('/api/journalEntries')
+      .send(newJournalEntry)
+      .set(headers)
+
+    const journalEntries = await helper.journalEntriesInDb()
+    const journalEntryToEdit = journalEntries[journalEntries.length - 1]
+    const editedJournalEntry = { ...journalEntryToEdit, content: 'I met some friends today after a long time and was great to catch up with them again. We agreed to meet next week too! I also wanted to still say that we went to a coffee shop and I had such a yummy cinnamon bun, I must buy another one very soon haha!' }
+
+    await api
+      .put(`/api/journalEntries/${journalEntryToEdit.id}`)
+      .send(editedJournalEntry)
+      .set(headers)
+      .expect(200)
+
+    const journalEntriesAtEnd = await helper.journalEntriesInDb()
+    const edited = journalEntriesAtEnd.find(journalEntry => journalEntry.id === editedJournalEntry.id)
+    expect(edited.content).toBe(editedJournalEntry.content)
+  })
+
+  test('a journal entry cannot be added without a title', async () => {
+    const newJournalEntry = {
+      title: '',
+      content: 'I met some friends today after a long time and was great to catch up with them again. We agreed to meet next week too!',
+      feelings: 'Content',
+      date: new Date()
+    }
+
+    await api
+      .post('/api/journalEntries')
+      .send(newJournalEntry)
+      .set(headers)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('a journal entry cannot be added without content', async () => {
+    const newJournalEntry = {
+      title: 'Meeting up with friends',
+      content: '',
+      feelings: 'Content',
+      date: new Date()
+    }
+
+    await api
+      .post('/api/journalEntries')
+      .send(newJournalEntry)
+      .set(headers)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
   })
 })
 

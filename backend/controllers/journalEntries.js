@@ -46,7 +46,7 @@ journalEntriesRouter.post('/', async (request, response) => {
 journalEntriesRouter.put('/:id', async (request, response) => {
   const journalEntry = request.body
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  
+
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'Token missing or invalid' })
   }
@@ -69,11 +69,11 @@ journalEntriesRouter.put('/:id', async (request, response) => {
 journalEntriesRouter.post('/:id/images', upload.single('image'), async (request, response) => {
   const journalEntry = await JournalEntry.findById(request.params.id)
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  
+
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'Token missing or invalid' })
   }
-  
+
   const user = await User.findById(decodedToken.id)
   const cloudinaryImage = await cloudinary.uploader.upload(request.file.path)
 

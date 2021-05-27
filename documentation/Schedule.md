@@ -22,4 +22,5 @@ Date | Hours | Description
 21.05.2021 | 3 | Add possibility to remove user
 24.05.2021 | 4 | Fix bugs in the backend controllers, create more tests for the backend
 24.05.2021 | 3 | Improve tests (check also user's data in journal entry addition and deletion tests) and add one new test
-Hours in total | 70
+27.05.2021 | 3 | Add more tests for the backend and fix password requirements and error handling
+Hours in total | 73

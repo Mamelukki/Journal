@@ -8,11 +8,7 @@ const userSchema = new mongoose.Schema({
     minlength: 3,
     unique: true
   },
-  passwordHash: {
-    type: String,
-    minlength: 8,
-    required: true
-  },
+  passwordHash: String,
   journalEntries: [
     {
       type: mongoose.Schema.Types.ObjectId,

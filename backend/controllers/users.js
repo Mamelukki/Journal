@@ -16,6 +16,12 @@ usersRouter.get('/', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
+  if ( !body.password || body.password.length < 8 ) {
+    return response.status(400).send({
+      error: 'password must be at least 8 characters long'
+    })
+  }
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
