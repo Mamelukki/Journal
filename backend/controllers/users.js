@@ -18,7 +18,7 @@ usersRouter.post('/', async (request, response) => {
 
   if ( !body.password || body.password.length < 8 ) {
     return response.status(400).send({
-      error: 'password must be at least 8 characters long'
+      error: 'Password must be at least 8 characters long'
     })
   }
 
@@ -28,6 +28,7 @@ usersRouter.post('/', async (request, response) => {
   const user = new User({
     username: body.username,
     name: body.name,
+    date: new Date(),
     passwordHash
   })
 

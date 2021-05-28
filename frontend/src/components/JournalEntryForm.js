@@ -11,6 +11,12 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
   const [content, setContent] = useState('')
   const [feelings, setFeelings] = useState('')
 
+  const resetValues = () => {
+    setTitle('')
+    setContent('')
+    setFeelings('')
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -56,6 +62,7 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
         </div>
         <br></br>
         <Button variant='contained' color='primary' type='submit'>Submit</Button>
+        <Button variant='contained' color='secondary' onClick={() => resetValues()}>Reset</Button>
       </form>
     </div>
   )

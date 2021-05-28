@@ -49,7 +49,7 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
                   {journalEntry.feelings}
                 </TableCell>
                 <TableCell>
-                  <Link to={`journalEntries/${journalEntry.id}`}><Button>View</Button></Link>
+                  <Link to={`journalEntries/${journalEntry.id}`}><Button variant='contained'>View</Button></Link>
                 </TableCell>
               </TableRow>
             )}

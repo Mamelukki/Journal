@@ -54,6 +54,10 @@ journalEntriesRouter.put('/:id', async (request, response) => {
   const user = await User.findById(decodedToken.id)
   journalEntry.user = user
 
+    if (!journalEntry.title) {
+    return response.status(400).json({ error: 'Journal entry must have a title' })
+  }
+
   if (!journalEntry.content) {
     return response.status(400).json({ error: 'Journal entry cannot be empty' })
   }

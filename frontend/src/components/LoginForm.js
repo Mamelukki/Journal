@@ -35,7 +35,6 @@ const LoginForm = () => {
     <div>
       <h2>Login</h2>
       <div>New to us? <Link to="/register">Register here.</Link></div>
-      <br></br>
       <form onSubmit={handleLogin} >
         <div>
           <TextField label='Username'

@@ -5,7 +5,7 @@ import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 import JournalEntryEditForm from './JournalEntryEditForm'
 import Togglable from './Togglable'
-import { Button } from '@material-ui/core'
+import { Button, Paper } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { useHistory } from 'react-router-dom'
 
@@ -28,6 +28,7 @@ const JournalEntry = ({ journalEntry }) => {
     const confirm = window.confirm('Are you sure you want to remove this journal entry? Confirming will also delete the images of this journal entry.')
     if (confirm) {
       dispatch(removeJournalEntry(id))
+      dispatch(addNotification('Journal entry deleted', 'success', 5))
       history.push('/journalEntries')
     }
   }
@@ -58,38 +59,42 @@ const JournalEntry = ({ journalEntry }) => {
   }
 
   return (
-    <div className='journal-entry' style={{ backgroundColor: 'white', padding: '10px', marginBottom: '10px' }}>
+    <div>
       <div>
         <Button variant='contained' color='secondary' startIcon={<DeleteIcon />} onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
         <Togglable buttonLabel='Edit' ref={journalEditFormRef} >
           <JournalEntryEditForm journalEntry={journalEntry} journalEditFormRef={journalEditFormRef} />
         </Togglable>
-        <h4>{`${date}/${month}/${year}`}</h4>
-        <h2>{journalEntry.title}</h2>
-        <h4>Your feelings today: {journalEntry.feelings}</h4>
-        <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
       </div>
-      <div>
-        <h5>Add image</h5>
-        <form onSubmit={handleSubmit}>
+      <Paper elevation={10}>
+        <div>
+          <h3>{`${date}/${month}/${year}`}</h3>
+          <h2>{journalEntry.title}</h2>
+          <h4>Your feelings today: {journalEntry.feelings}</h4>
+          <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
           <div>
-            <input
-              id='imageUpload'
-              type="file"
-              onChange={(e) => setSelectedImage(e.target.files[0])}
-            />
-          </div>
-          <button type='submit'>Add image</button>
-        </form>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', marginRight: '5px', marginLeft: '5px' }}>
-          {!journalEntry.images ? null :
-            journalEntry.images.map(image =>
-              <div key={image.id} >
-                <img src={`${image.imageUrl}`} height={'auto'} width={'100%'} maxwidth={'400px'} />
+            <h5>Add image</h5>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <input
+                  id='imageUpload'
+                  type="file"
+                  onChange={(e) => setSelectedImage(e.target.files[0])}
+                />
               </div>
-            )}
+              <button type='submit'>Add image</button>
+            </form>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', marginRight: '5px', marginLeft: '5px' }}>
+              {!journalEntry.images ? null :
+                journalEntry.images.map(image =>
+                  <div key={image.id} >
+                    <img src={`${image.imageUrl}`} height={'auto'} width={'100%'} maxwidth={'400px'} />
+                  </div>
+                )}
+            </div>
+          </div>
         </div>
-      </div>
+      </Paper>
     </div>
   )
 }

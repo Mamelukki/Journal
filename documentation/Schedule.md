@@ -23,4 +23,5 @@ Date | Hours | Description
 24.05.2021 | 4 | Fix bugs in the backend controllers, create more tests for the backend
 24.05.2021 | 3 | Improve tests (check also user's data in journal entry addition and deletion tests) and add one new test
 27.05.2021 | 6 | Add more tests for the backend and fix the password validation, start to use Material-UI and style the application
-Hours in total | 76
+28.05.2021 | 5 | Make small improvements and fixes (e.g. joining date for user, better editing possibilities for journal entries, notification for deleting a journal entry), work on UI
+Hours in total | 81

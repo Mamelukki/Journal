@@ -1,6 +1,5 @@
 body {
     margin: 0px;
-    font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif;
 }
 
 .navigation {
@@ -10,18 +9,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.login-button {
-    background-color:darkslategray;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    text-transform: uppercase;
 }
 
 .navigation-links {

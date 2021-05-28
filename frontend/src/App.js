@@ -13,7 +13,7 @@ import {
   Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
 import storage from './utils/storage'
-import Container from '@material-ui/core/Container'
+import { Button } from '@material-ui/core'
 
 function App() {
   const dispatch = useDispatch()
@@ -41,7 +41,7 @@ function App() {
   }
 
   return (
-    <Container>
+    <div>
       <div className='navigation'>
         <div className='navigation-links'>
           <div className='journal-link' >
@@ -62,7 +62,7 @@ function App() {
           </div>
           :
           <div className='navigation-links'>
-            <em className='logged-user'>Welcome <Link to={`/users/${currentUser.id}`}>{currentUser.username}</Link> <button onClick={() => handleLogout()}>Logout</button></em>
+            <em className='logged-user'>Welcome <Link to={`/users/${currentUser.id}`}>{currentUser.username}</Link> <Button variant='contained' onClick={() => handleLogout()}>Logout</Button></em>
           </div>}
       </div>
       <div style={{ marginLeft: '25px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
@@ -87,7 +87,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Container>
+    </div>
   )
 }
 

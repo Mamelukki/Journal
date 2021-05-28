@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   passwordHash: String,
+  date: {
+    type: Date,
+    required: true
+  },
   journalEntries: [
     {
       type: mongoose.Schema.Types.ObjectId,
