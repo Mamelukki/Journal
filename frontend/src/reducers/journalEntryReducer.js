@@ -19,6 +19,16 @@ const journalEntryReducer = (state = [], action) => {
       journalEntry.id !== action.data.journalEntry.id ? journalEntry : journalEntryWithImage
     )
   }
+  case 'REMOVE_IMAGE': {
+    const journalEntryToChange = state.find(journalEntry => journalEntry.id === action.journalEntryId)
+    const journalEntryWithoutImage = {
+      ...journalEntryToChange,
+      images: journalEntryToChange.images.filter(image => image.id !== action.imageId)
+    }
+    return state.map(journalEntry =>
+      journalEntry.id !== action.journalEntryId ? journalEntry : journalEntryWithoutImage
+    )
+  }
   case 'REMOVE_JOURNAL_ENTRY':
     return state.filter(journalEntry => journalEntry.id !== action.data)
   default:
@@ -60,6 +70,17 @@ export const addImage = (journalEntry) => {
     dispatch({
       type: 'ADD_IMAGE',
       data: journalEntry
+    })
+  }
+}
+
+export const removeImage = (journalEntryId, imageId) => {
+  return async dispatch => {
+    await journalEntryService.removeImage(journalEntryId, imageId)
+    dispatch({
+      type: 'REMOVE_IMAGE',
+      journalEntryId: journalEntryId,
+      imageId: imageId
     })
   }
 }

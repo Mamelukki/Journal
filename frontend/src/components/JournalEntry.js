@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { removeJournalEntry, addImage } from '../reducers/journalEntryReducer'
+import { removeJournalEntry, addImage, removeImage } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 import JournalEntryEditForm from './JournalEntryEditForm'
@@ -33,6 +33,12 @@ const JournalEntry = ({ journalEntry }) => {
     }
   }
 
+  const handleRemoveImage = (journalEntryId, imageId) => {
+    dispatch(addNotification('Image is being deleted, please wait...', 'success', 5))
+    dispatch(removeImage(journalEntryId, imageId))
+    dispatch(addNotification('Image deleted', 'success', 5))
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -53,7 +59,8 @@ const JournalEntry = ({ journalEntry }) => {
       setSelectedImage(null)
     } catch (exception) {
       document.getElementById('imageUpload').value = ''
-      dispatch(addNotification('Image addition failed', 'error', 5))
+      console.log('error', exception.response.data)
+      dispatch(addNotification(`${exception.response.data}`, 'error', 5))
       setSelectedImage(null)
     }
   }
@@ -89,6 +96,7 @@ const JournalEntry = ({ journalEntry }) => {
                 journalEntry.images.map(image =>
                   <div key={image.id} >
                     <img src={`${image.imageUrl}`} height={'auto'} width={'100%'} maxwidth={'400px'} />
+                    <Button onClick={() => handleRemoveImage(journalEntry.id, image.id)}>Delete</Button>
                   </div>
                 )}
             </div>

@@ -32,9 +32,14 @@ const remove = async (id) => {
   return response.data
 }
 
-const addImage = (id, formData) => {
-  const request = axios.post(`${baseUrl}/${id}/images`, formData, getConfig())
-  return request.then(response => response.data)
+const addImage = async (id, formData) => {
+  const response = await axios.post(`${baseUrl}/${id}/images`, formData, getConfig())
+  return response.data
+}
+
+const removeImage = async (journalEntryId, imageId) => {
+  const response = await axios.delete(`${baseUrl}/${journalEntryId}/images/${imageId}`, getConfig())
+  return response.data
 }
 
 export default {
@@ -42,5 +47,6 @@ export default {
   createNew,
   edit,
   remove,
-  addImage
+  addImage,
+  removeImage
 }

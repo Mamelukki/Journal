@@ -70,7 +70,13 @@ journalEntriesRouter.put('/:id', async (request, response) => {
   response.json(updatedJournalEntry)
 })
 
-journalEntriesRouter.post('/:id/images', upload.single('image'), async (request, response) => {
+journalEntriesRouter.post('/:id/images', async (request, response) => {
+  upload(request, response, function (error) {
+    if (error) {
+      return response.status(500).json(error.message)
+    }
+  })
+
   const journalEntry = await JournalEntry.findById(request.params.id)
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
@@ -97,7 +103,30 @@ journalEntriesRouter.post('/:id/images', upload.single('image'), async (request,
   user.images = user.images.concat(savedImage._id)
   await user.save()
 
-  response.status(201).json(savedImage)
+  response.status(200).json(savedImage)
+})
+
+journalEntriesRouter.delete('/:journalEntryId/images/:imageId', async (request, response) => {
+  const journalEntry = await JournalEntry.findById(request.params.journalEntryId).populate('images', { cloudinaryId: 1 })
+  const image = await Image.findById(request.params.imageId)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({ error: 'Token missing or invalid' })
+  }
+
+  const user = await User.findById(decodedToken.id).populate('images', {  imageUrl: 1, cloudinaryId: 1 })
+  
+  await cloudinary.uploader.destroy(image.cloudinaryId)
+  await image.remove()
+
+  journalEntry.images = journalEntry.images.filter(image => image.toString() !== image.id.toString())
+  await journalEntry.save()
+
+  user.images = user.images.filter(image => image.toString() !== image.id.toString())
+  await user.save()
+
+  response.status(204).end()
 })
 
 journalEntriesRouter.delete('/:id', async (request, response) => {
