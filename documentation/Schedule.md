@@ -25,4 +25,5 @@ Date | Hours | Description
 27.05.2021 | 6 | Add more tests for the backend and fix the password validation, start to use Material-UI and style the application
 28.05.2021 | 5 | Make small improvements and fixes (e.g. joining date for user, better editing possibilities for journal entries, notification for deleting a journal entry), work on UI
 31.05.2021 | 4 | Show error message when the uploaded image is in wrong format, add possibility to delete images
-Hours in total | 85
+01.06.2021 | 5 | Add filter for journal entries
+Hours in total | 90

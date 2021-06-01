@@ -4,7 +4,7 @@ body {
 
 .navigation {
     text-transform: uppercase;
-    background-color: lightsteelblue;
+    background-color:slategray;
     padding: 25px;
     display: flex;
     justify-content: space-between;

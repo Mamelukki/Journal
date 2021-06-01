@@ -35,7 +35,7 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
 
   return (
     <div>
-      <h3>How was your day?</h3>
+      <h3 style={{ textAlign: 'left' }}>How was your day?</h3>
       <form onSubmit={handleSubmit}>
         <div>
           <div>

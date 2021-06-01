@@ -52,14 +52,13 @@ const JournalEntry = ({ journalEntry }) => {
       const formData = new FormData()
       document.getElementById('imageUpload').value = ''
       formData.append('image', selectedImage)
-      dispatch(addNotification('Image uploading, please wait a few seconds', 'success', 5))
+      dispatch(addNotification('Image is being uploaded, please wait a few seconds', 'success', 5))
       const journalEntry = await journalEntryService.addImage(id, formData)
       dispatch(addImage(journalEntry))
       dispatch(addNotification('Image added successfully', 'success', 5))
       setSelectedImage(null)
     } catch (exception) {
       document.getElementById('imageUpload').value = ''
-      console.log('error', exception.response.data)
       dispatch(addNotification(`${exception.response.data}`, 'error', 5))
       setSelectedImage(null)
     }
@@ -78,7 +77,7 @@ const JournalEntry = ({ journalEntry }) => {
           <h3>{`${date}/${month}/${year}`}</h3>
           <h2>{journalEntry.title}</h2>
           <h4>Your feelings today: {journalEntry.feelings}</h4>
-          <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
+          <div style={{ whiteSpace: 'pre-line', textAlign: 'justify', padding: '20px' }}>{journalEntry.content}</div>
           <div>
             <h5>Add image</h5>
             <form onSubmit={handleSubmit}>
