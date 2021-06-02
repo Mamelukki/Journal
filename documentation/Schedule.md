@@ -26,4 +26,5 @@ Date | Hours | Description
 28.05.2021 | 5 | Make small improvements and fixes (e.g. joining date for user, better editing possibilities for journal entries, notification for deleting a journal entry), work on UI
 31.05.2021 | 4 | Show error message when the uploaded image is in wrong format, add possibility to delete images
 01.06.2021 | 5 | Add filter for journal entries
-Hours in total | 90
+02.06.2021 | 3 | Create a profile dropdown with possiblity to logout and view account information
+Hours in total | 93

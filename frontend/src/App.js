@@ -3,17 +3,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import JournalEntry from './components/JournalEntry'
 import JournalEntryList from './components/JournalEntryList'
 import RegisterForm from './components/RegisterForm'
+import AccountDropdown from './components/AccountDropdown'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import User from './components/User'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
-import { login, logout } from './reducers/loginReducer'
+import { login } from './reducers/loginReducer'
 import {
   Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
 import storage from './utils/storage'
-import { Button } from '@material-ui/core'
 
 function App() {
   const dispatch = useDispatch()
@@ -34,11 +34,6 @@ function App() {
       dispatch(login(user))
     }
   }, [dispatch])
-
-  const handleLogout = () => {
-    dispatch(logout())
-    storage.logoutUser()
-  }
 
   return (
     <div>
@@ -62,7 +57,7 @@ function App() {
           </div>
           :
           <div className='navigation-links'>
-            <em className='logged-user'>Welcome <Link to={`/users/${currentUser.id}`}>{currentUser.username}</Link> <Button variant='contained' onClick={() => handleLogout()}>Logout</Button></em>
+            <AccountDropdown></AccountDropdown>
           </div>}
       </div>
       <div style={{ marginLeft: '25px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
