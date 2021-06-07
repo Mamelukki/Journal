@@ -1,17 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useState }from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeJournalEntry } from '../reducers/journalEntryReducer'
 import { addNotification } from '../reducers/notificationReducer'
 import JournalEntryForm from './JournalEntryForm'
 import Filter from './Filter'
-import Togglable from './Togglable'
 import { TableContainer, Table, TableBody, Paper, TableRow, TableCell, Button } from '@material-ui/core'
 
 const JournalEntryList = ({ currentUser, journalEntries }) => {
-  const journalEntryAddFormRef = useRef()
   const dispatch = useDispatch()
   const filter = useSelector(state => state.filter)
+  const [showAddForm, setShowAddForm] = useState(false)
 
   if (!currentUser) {
     return null
@@ -40,14 +39,12 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
 
   return (
     <div>
-      <Togglable buttonLabel="New journal entry" ref={journalEntryAddFormRef}>
-        <JournalEntryForm journalEntryAddFormRef={journalEntryAddFormRef} />
-      </Togglable>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button variant='contained' style={{ backgroundColor: '#28f746' }} onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '25px' }}>
         <h1>Journal entries</h1>
         <Filter></Filter>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} >
         <Table>
           <TableBody>
             <TableRow>
@@ -56,9 +53,6 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
               </TableCell>
               <TableCell>
                 Title
-              </TableCell>
-              <TableCell>
-                Feelings
               </TableCell>
               <TableCell>
                 Options
@@ -73,17 +67,15 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
                   {journalEntry.title}
                 </TableCell>
                 <TableCell>
-                  {journalEntry.feelings}
-                </TableCell>
-                <TableCell>
-                  <Link to={`journalEntries/${journalEntry.id}`}><Button variant='contained' color='primary' >View</Button></Link>
-                  <Button style={{ marginLeft: '10px' }} variant='contained' color='secondary' onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
+                  <Link to={`journalEntries/${journalEntry.id}`}><Button style={{ marginRight: '10px' }} variant='contained' color='primary' >View</Button></Link>
+                  <Button variant='contained' color='secondary' onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </TableContainer>
+      <br></br>
     </div>
   )
 }

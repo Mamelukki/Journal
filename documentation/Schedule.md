@@ -27,4 +27,5 @@ Date | Hours | Description
 31.05.2021 | 4 | Show error message when the uploaded image is in wrong format, add possibility to delete images
 01.06.2021 | 5 | Add filter for journal entries
 02.06.2021 | 3 | Create a profile dropdown with possiblity to logout and view account information
-Hours in total | 93
+07.06.2021 | 6 | Work on navbar and UI
+Hours in total | 99

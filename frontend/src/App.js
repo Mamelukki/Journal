@@ -14,8 +14,29 @@ import {
   Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
 import storage from './utils/storage'
+import { makeStyles } from '@material-ui/core/styles'
+import { AppBar, Toolbar, Button, Typography } from '@material-ui/core'
 
-function App() {
+const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    textTransform: 'uppercase'
+  },
+  title: {
+    marginRight: '15px'
+  },
+  rightSide: {
+    marginLeft: 'auto'
+  },
+  appBar: {
+    backgroundColor: 'black',
+  },
+  toolbar: {
+    minHeight: 60
+  }
+}))
+
+const App = () => {
   const dispatch = useDispatch()
   const journalEntries = useSelector(state => state.journalEntries)
   const users = useSelector(state => state.users)
@@ -35,30 +56,34 @@ function App() {
     }
   }, [dispatch])
 
+  const classes = useStyles()
+
   return (
     <div>
-      <div className='navigation'>
-        <div className='navigation-links'>
-          <div className='journal-link' >
-            <Link to="/">Journal</Link>
-          </div>
-          <div className='journal-entries-link'>
-            <Link to="/journalEntries">Your journal entries</Link>
-          </div>
-        </div>
-        {!currentUser ?
-          <div className='navigation-links'>
-            <div className='login-link'>
-              <Link to="/login">Login</Link>
+      <div className={classes.root}>
+        <AppBar position="static" elevation={0} className={classes.appBar}>
+          {currentUser ?
+            <Toolbar className={classes.toolbar}>
+              <Typography variant="h6" className={classes.title}>
+                Journal
+              </Typography>
+              <Button style={{ color: 'inherit' }} component={Link} to="/journalEntries">
+                Your journal entries
+              </Button>
+              <div className={classes.rightSide}>
+                <AccountDropdown></AccountDropdown>
+              </div>
+            </Toolbar>
+            : <Toolbar><Typography variant="h6" className={classes.title}>
+              Journal
+            </Typography>
+            <div className={classes.rightSide}>
+              <Button component={Link} to='/login' style={{ color: 'inherit' }}>Login</Button>
+              <Button component={Link} to='/register' style={{ color: 'inherit' }}>Register</Button>
             </div>
-            <div className='register-link'>
-              <Link to="/register">Create account</Link>
-            </div>
-          </div>
-          :
-          <div className='navigation-links'>
-            <AccountDropdown></AccountDropdown>
-          </div>}
+            </Toolbar>
+          }
+        </AppBar>
       </div>
       <div style={{ marginLeft: '25px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
         <Notification notification={notification} />
@@ -79,10 +104,11 @@ function App() {
             <User users={users} />
           </Route>
           <Route path="/">
+            <JournalEntryList currentUser={currentUser} journalEntries={journalEntries} />
           </Route>
         </Switch>
       </div>
-    </div>
+    </div >
   )
 }
 

@@ -5,7 +5,7 @@ import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 import { TextField, Button } from '@material-ui/core'
 
-const JournalEntryForm = ({ journalEntryAddFormRef }) => {
+const JournalEntryForm = ({ showAddForm, setShowAddForm }) => {
   const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -15,6 +15,13 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
     setTitle('')
     setContent('')
     setFeelings('')
+  }
+
+  const handleCancel = () => {
+    setTitle('')
+    setContent('')
+    setFeelings('')
+    setShowAddForm(!showAddForm)
   }
 
   const handleSubmit = async (event) => {
@@ -27,7 +34,7 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
       setTitle('')
       setContent('')
       setFeelings('')
-      journalEntryAddFormRef.current.toggleVisibility()
+      setShowAddForm(!showAddForm)
     } catch (exception) {
       dispatch(addNotification(`${exception.response.data.error}`, 'error', 5))
     }
@@ -61,8 +68,9 @@ const JournalEntryForm = ({ journalEntryAddFormRef }) => {
           </div>
         </div>
         <br></br>
-        <Button variant='contained' color='primary' type='submit'>Submit</Button>
-        <Button variant='contained' color='secondary' onClick={() => resetValues()}>Reset</Button>
+        <Button style={{ marginRight: '10px' }} variant='contained' color='primary' type='submit'>Submit</Button>
+        <Button style={{ marginRight: '10px' }} variant='contained' color='secondary' onClick={() => resetValues()}>Reset</Button>
+        <Button style={{ marginRight: '10px' }} variant='contained' onClick={() => handleCancel()}>Cancel</Button>
       </form>
     </div>
   )

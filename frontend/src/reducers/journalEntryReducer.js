@@ -25,6 +25,8 @@ const journalEntryReducer = (state = [], action) => {
       ...journalEntryToChange,
       images: journalEntryToChange.images.filter(image => image.id !== action.imageId)
     }
+    console.log('reducer1', journalEntryToChange)
+    console.log('reducer2', journalEntryWithoutImage)
     return state.map(journalEntry =>
       journalEntry.id !== action.journalEntryId ? journalEntry : journalEntryWithoutImage
     )
@@ -76,7 +78,6 @@ export const addImage = (journalEntry) => {
 
 export const removeImage = (journalEntryId, imageId) => {
   return async dispatch => {
-    await journalEntryService.removeImage(journalEntryId, imageId)
     dispatch({
       type: 'REMOVE_IMAGE',
       journalEntryId: journalEntryId,
