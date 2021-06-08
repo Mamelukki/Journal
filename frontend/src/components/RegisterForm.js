@@ -33,15 +33,17 @@ const registerForm = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <TextField label='Username'
-            name='username' />
+            name='username'
+            id='username' />
         </div>
         <div>
           <TextField label='Password'
             name='password'
-            type='password' />
+            type='password'
+            id='password' />
         </div>
         <br></br>
-        <Button variant='contained' color='primary' type='submit'>Register</Button>
+        <Button id='register-button' variant='contained' color='primary' type='submit'>Register</Button>
       </form>
     </div>
   )

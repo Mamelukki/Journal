@@ -10,7 +10,7 @@ journalEntriesRouter.get('/', async (request, response) => {
   const journalEntries = await JournalEntry
     .find({})
     .populate('user', { username: 1 })
-    .populate('images', {  imageUrl: 1, cloudinaryId: 1 })
+    .populate('images', { imageUrl: 1, cloudinaryId: 1 })
   response.json(journalEntries.map(journalEntry => journalEntry.toJSON()))
 })
 
@@ -25,7 +25,7 @@ journalEntriesRouter.post('/', async (request, response) => {
     content: body.content,
     feelings: body.feelings,
     date: new Date(),
-    user: user
+    user: user._id
   })
 
   if (!journalEntry.title) {
@@ -37,10 +37,11 @@ journalEntriesRouter.post('/', async (request, response) => {
   }
 
   const savedJournalEntry = await journalEntry.save()
+  const savedJournalEntryWithUser = await JournalEntry.findById(savedJournalEntry._id).populate('user', { username: 1, images: 1, journalEntries: 1 })
   user.journalEntries = user.journalEntries.concat(savedJournalEntry._id)
   await user.save()
 
-  response.status(201).json(savedJournalEntry.toJSON())
+  response.status(201).json(savedJournalEntryWithUser.toJSON())
 })
 
 journalEntriesRouter.put('/:id', async (request, response) => {

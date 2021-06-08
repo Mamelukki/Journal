@@ -11,8 +11,20 @@ beforeEach(async () => {
   await JournalEntry.deleteMany({})
   await User.deleteMany({})
 
+  const newUser = {
+    username: 'user1',
+    password: 'password1',
+    date: new Date()
+  }
+
+  const result = await api
+    .post('/api/users')
+    .send(newUser)
+
   const journalEntryObjects = helper.initialJournalEntries
-    .map(journalEntry => new JournalEntry(journalEntry))
+    .map(journalEntry => new JournalEntry({
+      ...journalEntry, user: result.body.id
+    }))
 
   const promiseArray = journalEntryObjects.map(journalEntry => journalEntry.save())
   await Promise.all(promiseArray)
@@ -85,7 +97,7 @@ describe('creation of a user', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
 
-    expect(result.body.error).toContain('password must be at least 8 characters long')
+    expect(result.body.error).toContain('Password must be at least 8 characters long')
   })
 })
 

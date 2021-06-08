@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeJournalEntry } from '../reducers/journalEntryReducer'
@@ -11,6 +11,7 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
   const dispatch = useDispatch()
   const filter = useSelector(state => state.filter)
   const [showAddForm, setShowAddForm] = useState(false)
+  console.log(journalEntries)
 
   if (!currentUser) {
     return null
@@ -39,42 +40,48 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
 
   return (
     <div>
-      {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button variant='contained' style={{ backgroundColor: '#28f746' }} onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '25px' }}>
-        <h1>Journal entries</h1>
-        <Filter></Filter>
-      </div>
-      <TableContainer component={Paper} >
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                Date
-              </TableCell>
-              <TableCell>
-                Title
-              </TableCell>
-              <TableCell>
-                Options
-              </TableCell>
-            </TableRow>
-            {filteredJournalEntries().map(journalEntry =>
-              <TableRow key={journalEntry.id}>
-                <TableCell>
-                  {new Date(journalEntry.date).toDateString()}
-                </TableCell>
-                <TableCell>
-                  {journalEntry.title}
-                </TableCell>
-                <TableCell>
-                  <Link to={`journalEntries/${journalEntry.id}`}><Button style={{ marginRight: '10px' }} variant='contained' color='primary' >View</Button></Link>
-                  <Button variant='contained' color='secondary' onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {personalJournalEntries.length === 0 && showAddForm === false ? <h3>{'Nothing here yet! Get started by adding a new entry.'}</h3> : null}
+      {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button variant='contained' color='primary' onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
+      {personalJournalEntries.length > 0 && showAddForm === false ?
+        <div>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '25px' }}>
+            <h1>Journal entries</h1>
+            <Filter></Filter>
+          </div>
+          <TableContainer component={Paper} >
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    Date
+                  </TableCell>
+                  <TableCell>
+                    Title
+                  </TableCell>
+                  <TableCell>
+                    Options
+                  </TableCell>
+                </TableRow>
+                {filteredJournalEntries().map(journalEntry =>
+                  <TableRow key={journalEntry.id}>
+                    <TableCell>
+                      {new Date(journalEntry.date).toDateString()}
+                    </TableCell>
+                    <TableCell>
+                      {journalEntry.title}
+                    </TableCell>
+                    <TableCell>
+                      <Link to={`journalEntries/${journalEntry.id}`}><Button style={{ marginRight: '10px' }} variant='contained' color='primary' >View</Button></Link>
+                      <Button variant='contained' color='secondary' onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div> :
+        null
+      }
       <br></br>
     </div>
   )

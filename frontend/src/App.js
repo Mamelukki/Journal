@@ -104,7 +104,7 @@ const App = () => {
             <User users={users} />
           </Route>
           <Route path="/">
-            <JournalEntryList currentUser={currentUser} journalEntries={journalEntries} />
+            <div>Welcome to Journal app</div>
           </Route>
         </Switch>
       </div>

@@ -34,27 +34,29 @@ const LoginForm = () => {
   return (
     <div>
       <h2>Login</h2>
-      <div>New to us? <Link to="/register">Register here.</Link></div>
+      <div>New to us? <Link to='/register'>Register here.</Link></div>
       <form onSubmit={handleLogin} >
         <div>
           <TextField label='Username'
-            type="text"
+            type='text'
+            id='username'
             value={username}
-            name="Username"
+            name='Username'
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
         <div>
           <TextField label='Password'
-            type="password"
+            type='password'
+            id='password'
             value={password}
-            name="Password"
+            name='Password'
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
         <br></br>
         <div>
-          <Button variant='contained' color='primary' className='login-button' type="submit">Login</Button>
+          <Button id='login-button' variant='contained' color='primary' className='login-button' type='submit'>Login</Button>
         </div>
       </form>
     </div>

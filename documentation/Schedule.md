@@ -28,4 +28,5 @@ Date | Hours | Description
 01.06.2021 | 5 | Add filter for journal entries
 02.06.2021 | 3 | Create a profile dropdown with possiblity to logout and view account information
 07.06.2021 | 6 | Work on navbar and UI
-Hours in total | 99
+08.06.2021 | 5 | Add some tests for the frontend, bug fixing, small improvements (for the UI and backend tests)
+Hours in total | 104
