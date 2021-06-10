@@ -65,7 +65,7 @@ const JournalEntryEditForm = ({ journalEntry, showEditForm, setShowEditForm }) =
         </div>
         <br></br>
         <Button style={{ marginRight: '10px' }} variant='contained' color='primary' type='submit'>Submit</Button>
-        <Button style={{ marginRight: '10px' }} variant='contained' color='secondary' onClick={() => resetValues()}>Return original values</Button>
+        <Button style={{ marginRight: '10px' }} variant='contained' color='secondary' onClick={() => resetValues()}>Reset original values</Button>
         <Button style={{ marginRight: '10px' }} variant='contained' onClick={() => handleCancel()}>Cancel</Button>
       </form>
     </span>

@@ -85,7 +85,12 @@ journalEntriesRouter.post('/:id/images', async (request, response) => {
     return response.status(401).json({ error: 'Token missing or invalid' })
   }
 
+  if (journalEntry.images.length >= 10) {
+    return response.status(400).json({ error: 'Journal entry can have maximum 10 images' })
+  }
+
   const user = await User.findById(decodedToken.id)
+  console.log(request.file)
   const cloudinaryImage = await cloudinary.uploader.upload(request.file.path)
 
   const image = new Image({
@@ -121,10 +126,10 @@ journalEntriesRouter.delete('/:journalEntryId/images/:imageId', async (request, 
   await cloudinary.uploader.destroy(image.cloudinaryId)
   await image.remove()
 
-  journalEntry.images = journalEntry.images.filter(image => image.toString() !== image.id.toString())
+  journalEntry.images = journalEntry.images.filter(journalEntryImage => journalEntryImage.id.toString() !== image.id.toString())
   await journalEntry.save()
 
-  user.images = user.images.filter(image => image.toString() !== image.id.toString())
+  user.images = user.images.filter(userImage => userImage.id.toString() !== image.id.toString())
   await user.save()
 
   response.status(204).end()

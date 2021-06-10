@@ -20,7 +20,8 @@ import { AppBar, Toolbar, Button, Typography } from '@material-ui/core'
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    zIndex: 1
   },
   title: {
     marginRight: '15px'
@@ -32,7 +33,8 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'black',
   },
   toolbar: {
-    minHeight: 60
+    minHeight: 60,
+    zIndex: 1
   }
 }))
 

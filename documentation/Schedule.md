@@ -29,4 +29,5 @@ Date | Hours | Description
 02.06.2021 | 3 | Create a profile dropdown with possiblity to logout and view account information
 07.06.2021 | 6 | Work on navbar and UI
 08.06.2021 | 5 | Add some tests for the frontend, bug fixing, small improvements (for the UI and backend tests)
-Hours in total | 104
+10.06.2021 | 6 | Work on UI (for example make a delete button appear on image when hovering on it), fix bugs, make other small improvements
+Hours in total | 110

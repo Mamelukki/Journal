@@ -99,3 +99,23 @@ body {
 .logged-user {
     color: white;
 }
+
+.journalEntryImage {
+    position: relative;
+}
+
+.imageDeleteButton:hover {
+    display: block;
+}
+    
+.imageDeleteButton {
+    background-color: black;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    z-index: 100;
+}
+
+.button {
+    color: 'blue'
+}

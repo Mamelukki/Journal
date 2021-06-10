@@ -44,6 +44,8 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
       {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button variant='contained' color='primary' onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
       {personalJournalEntries.length > 0 && showAddForm === false ?
         <div>
+          <br></br>
+          <hr></hr>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '25px' }}>
             <h1>Journal entries</h1>
             <Filter></Filter>
