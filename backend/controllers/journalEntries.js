@@ -55,7 +55,7 @@ journalEntriesRouter.put('/:id', async (request, response) => {
   const user = await User.findById(decodedToken.id)
   journalEntry.user = user
 
-    if (!journalEntry.title) {
+  if (!journalEntry.title) {
     return response.status(400).json({ error: 'Journal entry must have a title' })
   }
 
@@ -121,8 +121,8 @@ journalEntriesRouter.delete('/:journalEntryId/images/:imageId', async (request, 
     return response.status(401).json({ error: 'Token missing or invalid' })
   }
 
-  const user = await User.findById(decodedToken.id).populate('images', {  imageUrl: 1, cloudinaryId: 1 })
-  
+  const user = await User.findById(decodedToken.id).populate('images', { imageUrl: 1, cloudinaryId: 1 })
+
   await cloudinary.uploader.destroy(image.cloudinaryId)
   await image.remove()
 
@@ -143,7 +143,7 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
   }
 
   const user = await User.findById(decodedToken.id)
-  const journalEntry = await JournalEntry.findById(request.params.id).populate('images', {  imageUrl: 1, cloudinaryId: 1 })
+  const journalEntry = await JournalEntry.findById(request.params.id).populate('images', { imageUrl: 1, cloudinaryId: 1 })
 
   if (journalEntry.user.toString() !== user.id.toString()) {
     return response.status(401).json({ error: 'Only the creator can delete the journal entry' })

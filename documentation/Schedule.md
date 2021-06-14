@@ -30,4 +30,5 @@ Date | Hours | Description
 07.06.2021 | 6 | Work on navbar and UI
 08.06.2021 | 5 | Add some tests for the frontend, bug fixing, small improvements (for the UI and backend tests)
 10.06.2021 | 6 | Work on UI (for example make a delete button appear on image when hovering on it), fix bugs, make other small improvements
-Hours in total | 110
+14.06.2021 | 7 | Add home page, make it possible to view the images as bigger, work on UI, different kind of small improvements and bug fixes
+Hours in total | 117

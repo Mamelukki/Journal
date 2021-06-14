@@ -6,6 +6,7 @@ import RegisterForm from './components/RegisterForm'
 import AccountDropdown from './components/AccountDropdown'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import HomePage from './components/HomePage'
 import User from './components/User'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
@@ -106,7 +107,7 @@ const App = () => {
             <User users={users} />
           </Route>
           <Route path="/">
-            <div>Welcome to Journal app</div>
+            <HomePage></HomePage>
           </Route>
         </Switch>
       </div>

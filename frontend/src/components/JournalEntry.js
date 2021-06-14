@@ -4,10 +4,12 @@ import { removeJournalEntry, addImage, removeImage } from '../reducers/journalEn
 import { addNotification } from '../reducers/notificationReducer'
 import journalEntryService from '../services/journalEntries'
 import JournalEntryEditForm from './JournalEntryEditForm'
-import { Button } from '@material-ui/core'
+import { Button, IconButton } from '@material-ui/core'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import CloseIcon from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
@@ -18,13 +20,43 @@ const useStyles = makeStyles(() => ({
     '& .imageDeleteButton': {
       display: 'none',
     },
+    '& .zoomButton': {
+      display: 'none',
+    },
+    '&:hover .zoomButton': {
+      display: 'block',
+      position: 'absolute',
+      color: 'white',
+      top: '1px',
+      left: '1px',
+      zIndex: '100',
+    },
     '&:hover .imageDeleteButton': {
       display: 'block',
       position: 'absolute',
       color: 'white',
       top: '1px',
       right: '1px',
-      zIndex: '100'
+      zIndex: '100',
+    },
+    '&:hover .backgroundImage': {
+      filter: 'blur(1px)'
+    }
+  },
+  zoomedImage: {
+    position: 'relative',
+    marginTop: '25px',
+    '& .closeZoomButton': {
+      display: 'inline-block',
+      position: 'absolute',
+      color: 'black',
+      top: '0px',
+      right: '0px',
+      zIndex: '100',
+    },
+    '& .zoomedBackgroundImage': {
+      height: 'auto',
+      maxWidth: `${window.innerWidth - 160}px`,
     }
   }
 }))
@@ -46,6 +78,12 @@ const JournalEntry = ({ journalEntry }) => {
   const [showEditForm, setShowEditForm] = useState(false)
   const [uploadFinished, setUploadFinished] = useState(true)
   const [showImageUpload, setShowImageUpload] = useState(false)
+  const [showFullSizeImage, setShowFullSizeImage] = useState('')
+
+  let zoomedImage = ''
+  if (showFullSizeImage) {
+    zoomedImage = journalEntry.images.find(image => image.id === showFullSizeImage)
+  }
 
   const handleRemove = (id) => {
     const confirm = window.confirm('Are you sure you want to remove this journal entry? Confirming will also delete the images of this journal entry.')
@@ -68,6 +106,10 @@ const JournalEntry = ({ journalEntry }) => {
     setSelectedImage('')
   }
 
+  const zoomImage = (id) => {
+    setShowFullSizeImage(id)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -80,6 +122,7 @@ const JournalEntry = ({ journalEntry }) => {
         setUploadFinished(false)
         const formData = new FormData()
         formData.append('image', selectedImage)
+        console.log(formData)
         const journalEntry = await journalEntryService.addImage(id, formData)
         dispatch(addImage(journalEntry))
         dispatch(addNotification('Image added successfully', 'success', 5))
@@ -87,13 +130,42 @@ const JournalEntry = ({ journalEntry }) => {
         setSelectedImage(null)
         document.getElementById('imageUpload').value = ''
       } catch (exception) {
-        console.log('error', exception)
         setUploadFinished(false)
-        dispatch(addNotification(`${exception.response.data.error}`, 'error', 15))
+        if (!exception.response.data.error) {
+          dispatch(addNotification(`${exception.response.data}`, 'error', 5))
+        } else {
+          dispatch(addNotification(`${exception.response.data.error}`, 'error', 15))
+        }
         setUploadFinished(true)
         setSelectedImage(null)
         document.getElementById('imageUpload').value = ''
       }
+    }
+  }
+
+  const printImages = () => {
+    if (!journalEntry.images) {
+      return null
+    }
+
+    if (showFullSizeImage === '') {
+      return (
+        <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gridGap: '10px', justifyContent: 'space-between', marginTop: '25px' }}>
+          {journalEntry.images.map(image =>
+            <div key={image.id} className={classes.journalEntryImage}>
+              <p className='backgroundImage' style={{ backgroundImage: `url(${image.imageUrl})`, height: '200px', width: '100%', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+              <IconButton className='imageDeleteButton' onClick={() => handleRemoveImage(journalEntry.id, image.id)}><DeleteIcon /></IconButton>
+              <IconButton className='zoomButton' onClick={() => zoomImage(image.id)}><ZoomInIcon/></IconButton>
+            </div>
+          )}
+        </div>
+      )
+    } else {
+      return (
+        <div className={classes.zoomedImage}>
+          <img className='zoomedBackgroundImage' src={zoomedImage.imageUrl}></img>
+          <IconButton className='closeZoomButton' onClick={() => setShowFullSizeImage('')}><CloseIcon/></IconButton>
+        </div>)
     }
   }
 
@@ -136,10 +208,9 @@ const JournalEntry = ({ journalEntry }) => {
           <span style={{ marginLeft: '10px' }} >Image uploading...</span>
         </div>
         : null}
-      <div style={{ margin: '25px' }}>
+      <div style={{ marginTop: '25px', marginBottom: '25px' }}>
         {showEditForm ? <JournalEntryEditForm journalEntry={journalEntry} showEditForm={showEditForm} setShowEditForm={setShowEditForm} /> : null}
       </div>
-      <hr></hr>
       <div style={{ marginBottom: '25px', marginTop: '25px' }}>
         <h2>{`${date}/${month}/${year}`}</h2>
         <h1>{journalEntry.title}</h1>
@@ -147,16 +218,7 @@ const JournalEntry = ({ journalEntry }) => {
         <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
       </div>
       <div>
-        <hr></hr>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gridGap: '10px', justifyContent: 'space-between', marginTop: '25px' }}>
-          {!journalEntry.images ? null :
-            journalEntry.images.map(image =>
-              <div key={image.id} className={classes.journalEntryImage}>
-                <p style={{ backgroundImage: `url(${image.imageUrl})`, height: '200px', width: '100%', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-                <Button className='imageDeleteButton' onClick={() => handleRemoveImage(journalEntry.id, image.id)}>Delete</Button>
-              </div>
-            )}
-        </div>
+        {printImages()}
       </div>
     </div>
   )

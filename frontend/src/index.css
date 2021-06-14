@@ -119,3 +119,42 @@ body {
 .button {
     color: 'blue'
 }
+
+.img-text-wrapper {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.home-page-background-img {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: auto;
+    max-width: 100%
+}
+
+.home-page-items-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.home-page-item-wrapper {
+    position: 'relative'
+}
+
+.imgTextWrapper:hover .subtitle {
+    color: 'white'
+}
+
+.imgDarken {
+    transition: 1s;
+    filter: brightness(10%);
+}

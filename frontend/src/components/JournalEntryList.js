@@ -40,12 +40,11 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
 
   return (
     <div>
-      {personalJournalEntries.length === 0 && showAddForm === false ? <h3>{'Nothing here yet! Get started by adding a new entry.'}</h3> : null}
+      {personalJournalEntries.length === 0 && showAddForm === false ? <h3 style={{ marginBottom: '20px' }}>{'Nothing here yet! Get started by adding a new entry.'}</h3> : null}
       {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button variant='contained' color='primary' onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
       {personalJournalEntries.length > 0 && showAddForm === false ?
         <div>
           <br></br>
-          <hr></hr>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '25px' }}>
             <h1>Journal entries</h1>
             <Filter></Filter>
