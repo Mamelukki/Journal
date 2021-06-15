@@ -51,6 +51,5 @@
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-jest": "^24.3.5",
     "redux-devtools-extension": "^2.13.9"
-  },
-  "proxy": "http://localhost:3001"
+  }
 }
