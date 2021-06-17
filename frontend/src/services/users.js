@@ -1,7 +1,7 @@
 import axios from 'axios'
 import storage from '../utils/storage'
 
-const baseUrl = 'http://localhost:3001/api/users'
+const baseUrl = '/api/users'
 
 const getConfig = () => {
   if (storage.loadUser()) {
