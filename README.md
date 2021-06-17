@@ -1,45 +1,34 @@
 # Journal
 
-Hobby project built with Node.js and React. The goal of the project is to build a journaling app with a possibility to create users and make personal notes once you are logged in. Work is still in progress. Following features will be implemented on the application:
+Journaling app built with Node.js and React. MongoDB was used for storing data and Cloudinary for storing images. 
+[You can find the app and test it on Heroku](https://mamelukki-journal.herokuapp.com/)
 
-- Registeration
+### Features
+
+- Register
 - Login
-- Editing account
-- Deleting account
-- Adding journal entries
-- Editing journal entries
-- Deleting journal entries
-- Filtering journal entries
-- Searching for journal entries
+- Add entry
+- Edit entry
+- Add (max 10) images per entry
+- Delete entry
+- Delete account
+- Filter entries
 
-However, the features might not be limited to those. 
+### What I learned during this project
 
-### Instructions
+- How to upload images (handling file input, storing images, using Multer middleware and Cloudinary) 
+- How to show images to user smartly (how to deal with different sized images)
+- How to better use CSS (Grid, Flexbox, text on images etc.)
+- How to make tokens expire
+- How to use MaterialUI
+- Got more confident in programming and understand better the overall structure of web applications
 
-Application can so far only be run on localhost. In case you want to test the application while it is still in development, follow these instructions. The backend will expect that there's an .env file with values MONGODB_URI, PORT and SECRET specified. 
+### What could be improved
 
-Start by cloning the repository.
-
-Open both the backend and the frontend folders on your command line and install required dependencies by running 
-``` 
-npm install
-``` 
-
-Start the backend by running
-
-``` 
-npm run dev
-``` 
-
-when you are in the backend folder. This should make the backend run on the port you defined in the .env file. 
-
-
-Start the frontend by running
-
-``` 
-npm start
-``` 
-
-when you are in the frontend folder. This should make the frontend run on port 3000. 
-
-You should now be able to use the application on [http://localhost:3000](http://localhost:3000). Happy testing :) 
+- Creating CSS files for all the styles instead of the current combination of inline styles and MaterialUI styles
+- Journal entry component needs to be refactored, it's too complex and long and takes care of too many things
+- After token expiration, the user should be logged out
+- Adding images should be possible already while creating entries, not just after creating
+- Adding multiple images at once
+- Adding CI/CD pipeline
+- Adding more (comprehensive) tests
