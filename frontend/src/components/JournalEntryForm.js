@@ -60,7 +60,7 @@ const JournalEntryForm = ({ showAddForm, setShowAddForm }) => {
             />
           </div>
           <div>
-            <TextField multiline label='Content' rows={7} fullWidth
+            <TextField multiline label='Describe your day' rows={7} fullWidth
               id='content'
               value={content}
               onChange={({ target }) => setContent(target.value)}

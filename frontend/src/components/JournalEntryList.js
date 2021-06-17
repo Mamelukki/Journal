@@ -11,7 +11,6 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
   const dispatch = useDispatch()
   const filter = useSelector(state => state.filter)
   const [showAddForm, setShowAddForm] = useState(false)
-  console.log(journalEntries)
 
   if (!currentUser) {
     return null

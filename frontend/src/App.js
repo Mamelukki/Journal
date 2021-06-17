@@ -36,6 +36,11 @@ const useStyles = makeStyles(() => ({
   toolbar: {
     minHeight: 60,
     zIndex: 1
+  },
+  bottomAppBar: {
+    bottom: 0,
+    backgroundColor: 'white',
+    color: 'black'
   }
 }))
 
@@ -68,7 +73,7 @@ const App = () => {
           {currentUser ?
             <Toolbar className={classes.toolbar}>
               <Typography variant="h6" className={classes.title}>
-                Journal
+                <Link style={{ color: 'white', textDecoration: 'none' }} to='/'>Journal</Link>
               </Typography>
               <Button style={{ color: 'inherit' }} component={Link} to="/journalEntries">
                 Your journal entries
@@ -77,13 +82,14 @@ const App = () => {
                 <AccountDropdown></AccountDropdown>
               </div>
             </Toolbar>
-            : <Toolbar><Typography variant="h6" className={classes.title}>
-              Journal
-            </Typography>
-            <div className={classes.rightSide}>
-              <Button component={Link} to='/login' style={{ color: 'inherit' }}>Login</Button>
-              <Button component={Link} to='/register' style={{ color: 'inherit' }}>Register</Button>
-            </div>
+            : <Toolbar>
+              <Typography variant="h6" className={classes.title}>
+                <Link style={{ color: 'white', textDecoration: 'none' }} to='/'>Journal</Link>
+              </Typography>
+              <div className={classes.rightSide}>
+                <Button component={Link} to='/login' style={{ color: 'inherit' }}>Login</Button>
+                <Button component={Link} to='/register' style={{ color: 'inherit' }}>Register</Button>
+              </div>
             </Toolbar>
           }
         </AppBar>
@@ -107,7 +113,10 @@ const App = () => {
             <User users={users} />
           </Route>
           <Route path="/">
-            <HomePage></HomePage>
+            {!currentUser ?
+              <HomePage></HomePage> :
+              <JournalEntryList currentUser={currentUser} journalEntries={journalEntries} />
+            }
           </Route>
         </Switch>
       </div>

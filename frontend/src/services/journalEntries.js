@@ -22,7 +22,6 @@ const createNew = async (newObject) => {
 }
 
 const edit = async (editedObject) => {
-  console.log(`edited object: ${editedObject}`)
   const response = await axios.put(`${baseUrl}/${editedObject.id}`, editedObject, getConfig())
   return response.data
 }

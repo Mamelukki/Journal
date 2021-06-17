@@ -72,18 +72,18 @@ journalEntriesRouter.put('/:id', async (request, response) => {
 })
 
 journalEntriesRouter.post('/:id/images', async (request, response) => {
-  upload(request, response, function (error) {
-    if (error) {
-      return response.status(500).json(error.message)
-    }
-  })
-
   const journalEntry = await JournalEntry.findById(request.params.id)
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'Token missing or invalid' })
   }
+
+  upload(request, response, function (error) {
+    if (error) {
+      return response.status(500).json(error.message)
+    }
+  })
 
   if (journalEntry.images.length >= 10) {
     return response.status(400).json({ error: 'Journal entry can have maximum 10 images' })

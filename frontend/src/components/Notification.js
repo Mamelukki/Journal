@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, AlertTitle } from '@material-ui/lab'
+import { Alert } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
@@ -21,7 +21,6 @@ const Notification = ({ notification }) => {
     return (
       <div className={classes.notification}>
         <Alert severity='error'>
-          <AlertTitle>Error</AlertTitle>
           {notification.message}!
         </Alert>
       </div>
@@ -31,7 +30,6 @@ const Notification = ({ notification }) => {
   return (
     <div className={classes.notification}>
       <Alert severity='success'>
-        <AlertTitle>Success</AlertTitle>
         {notification.message}!
       </Alert>
     </div>

@@ -33,7 +33,7 @@ const AccountDropdown = () => {
   const handleLogout = () => {
     dispatch(logout())
     storage.logoutUser()
-    history.push('/login')
+    history.push('/')
   }
 
   return (
@@ -61,7 +61,7 @@ const AccountDropdown = () => {
           horizontal: 'center',
         }}
       >
-        <Link style={{ color: 'inherit' }} to={`/users/${currentUser.id}`}><MenuItem onClick={closeDropdown}>My account</MenuItem></Link>
+        <Link style={{ color: 'inherit', textDecoration: 'none' }} to={`/users/${currentUser.id}`}><MenuItem onClick={closeDropdown}>My account</MenuItem></Link>
         <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
       </Menu>
     </span>

@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
       display: 'block',
       position: 'absolute',
       color: 'white',
-      top: '1px',
+      top: '10px',
       left: '1px',
       zIndex: '100',
     },
@@ -35,12 +35,9 @@ const useStyles = makeStyles(() => ({
       display: 'block',
       position: 'absolute',
       color: 'white',
-      top: '1px',
+      top: '10px',
       right: '1px',
       zIndex: '100',
-    },
-    '&:hover .backgroundImage': {
-      filter: 'blur(1px)'
     }
   },
   zoomedImage: {
@@ -122,7 +119,6 @@ const JournalEntry = ({ journalEntry }) => {
         setUploadFinished(false)
         const formData = new FormData()
         formData.append('image', selectedImage)
-        console.log(formData)
         const journalEntry = await journalEntryService.addImage(id, formData)
         dispatch(addImage(journalEntry))
         dispatch(addNotification('Image added successfully', 'success', 5))
@@ -214,7 +210,7 @@ const JournalEntry = ({ journalEntry }) => {
       <div style={{ marginBottom: '25px', marginTop: '25px' }}>
         <h2>{`${date}/${month}/${year}`}</h2>
         <h1>{journalEntry.title}</h1>
-        <h4 style={{ textDecoration: 'underline' }}>{journalEntry.feelings ? `Feelings: ${journalEntry.feelings}` : null}</h4>
+        <h4>{journalEntry.feelings ? `Feelings: ${journalEntry.feelings}` : null}</h4>
         <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
       </div>
       <div>
