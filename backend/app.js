@@ -9,6 +9,7 @@ const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
+const path = require('path')
 
 logger.info('connecting to', config.MONGODB_URI)
 
@@ -34,6 +35,13 @@ if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
 }
+app.get('/*', (request, response) => {
+  response.sendFile(path.join(__dirname, './build/index.html'), (error) => {
+    if (error) {
+      response.status(500).send(error)
+    }
+  })
+})
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

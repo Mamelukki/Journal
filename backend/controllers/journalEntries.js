@@ -71,7 +71,7 @@ journalEntriesRouter.put('/:id', async (request, response) => {
   response.json(updatedJournalEntry)
 })
 
-journalEntriesRouter.post('/:id/images', async (request, response) => {
+journalEntriesRouter.post('/:id/images', upload, async (request, response) => {
   const journalEntry = await JournalEntry.findById(request.params.id)
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
@@ -79,18 +79,11 @@ journalEntriesRouter.post('/:id/images', async (request, response) => {
     return response.status(401).json({ error: 'Token missing or invalid' })
   }
 
-  upload(request, response, function (error) {
-    if (error) {
-      return response.status(500).json(error.message)
-    }
-  })
-
   if (journalEntry.images.length >= 10) {
     return response.status(400).json({ error: 'Journal entry can have maximum 10 images' })
   }
 
   const user = await User.findById(decodedToken.id)
-  console.log(request.file)
   const cloudinaryImage = await cloudinary.uploader.upload(request.file.path)
 
   const image = new Image({

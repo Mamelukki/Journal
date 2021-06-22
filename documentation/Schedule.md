@@ -33,4 +33,5 @@ Date | Hours | Description
 14.06.2021 | 7 | Add home page, make it possible to view the images as bigger, work on UI, different kind of small improvements and bug fixes
 14.06.2021 | 4 | Make backend run on Heroku
 17.06.2021 | 5 | Create a frontend production build for Heroku, improve home page and work on UI, add token expiration, make the application run on Heroku
-Hours in total | 126
+22.06.2021 | 6 | Fix routing error (where refreshing the page gives unknown endpoint), change error handling of image file type error, other small fixes 
+Hours in total | 132

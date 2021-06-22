@@ -92,7 +92,7 @@ const JournalEntry = ({ journalEntry }) => {
   }
 
   const handleRemoveImage = async (journalEntryId, imageId) => {
-    dispatch(addNotification('Deleting image, please wait...', 'success', 5))
+    dispatch(addNotification('Deleting image, please wait', 'success', 5))
     await journalEntryService.removeImage(journalEntryId, imageId)
     dispatch(removeImage(journalEntryId, imageId))
     dispatch(addNotification('Image deleted', 'success', 5))
