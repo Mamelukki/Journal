@@ -11,6 +11,8 @@ import User from './components/User'
 import { initializeJournalEntries } from './reducers/journalEntryReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { login } from './reducers/loginReducer'
+import GitHubIcon from '@material-ui/icons/GitHub'
+import ImageIcon from '@material-ui/icons/Image'
 import {
   Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
@@ -34,7 +36,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'black',
   },
   toolbar: {
-    minHeight: 60,
+    minHeight: 80,
     zIndex: 1
   },
   bottomAppBar: {
@@ -67,23 +69,23 @@ const App = () => {
   const classes = useStyles()
 
   return (
-    <div>
+    <div style={{ paddingBottom: '30px' }}>
       <div className={classes.root}>
         <AppBar position="static" elevation={0} className={classes.appBar}>
           {currentUser ?
             <Toolbar className={classes.toolbar}>
-              <Typography variant="h6" className={classes.title}>
+              <Typography variant="h5" className={classes.title}>
                 <Link style={{ color: 'white', textDecoration: 'none' }} to='/'>Journal</Link>
               </Typography>
               <Button style={{ color: 'inherit' }} component={Link} to="/journalEntries">
-                Your journal entries
+                Your entries
               </Button>
               <div className={classes.rightSide}>
                 <AccountDropdown></AccountDropdown>
               </div>
             </Toolbar>
-            : <Toolbar>
-              <Typography variant="h6" className={classes.title}>
+            : <Toolbar className={classes.toolbar}>
+              <Typography variant="h5" className={classes.title}>
                 <Link style={{ color: 'white', textDecoration: 'none' }} to='/'>Journal</Link>
               </Typography>
               <div className={classes.rightSide}>
@@ -94,7 +96,7 @@ const App = () => {
           }
         </AppBar>
       </div>
-      <div style={{ marginLeft: '25px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
+      <div style={{ marginLeft: '25px', marginBottom: '60px', marginTop: '25px', marginRight: '25px', textAlign: 'center' }}>
         <Notification notification={notification} />
         <Switch>
           <Route path="/journalEntries/:id">
@@ -120,7 +122,13 @@ const App = () => {
           </Route>
         </Switch>
       </div>
-    </div >
+      <footer style={{ position: 'absolute', bottom: '0', width: '100%', backgroundColor: '#e6e8e6' }}>
+        <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center', padding: '25px' }}>
+          <a href='https://github.com/Mamelukki/Journal' style={{ textDecoration: 'none' }}><GitHubIcon style={{ fontSize: 'medium', color: 'black', marginRight: '10px' }}></GitHubIcon></a>
+          <a href='https://unsplash.com/' style={{ textDecoration: 'none' }}><ImageIcon style={{ fontSize: 'medium', color: 'black' }}></ImageIcon></a>
+        </div>
+      </footer>
+    </div>
   )
 }
 

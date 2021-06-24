@@ -65,13 +65,13 @@ const JournalEntryList = ({ currentUser, journalEntries }) => {
                 {filteredJournalEntries().map(journalEntry =>
                   <TableRow key={journalEntry.id}>
                     <TableCell>
-                      {new Date(journalEntry.date).toDateString()}
+                      {`${new Date(journalEntry.date).getDate()}/${new Date(journalEntry.date).getMonth()}/${new Date(journalEntry.date).getFullYear()}`}
                     </TableCell>
                     <TableCell>
                       {journalEntry.title}
                     </TableCell>
                     <TableCell>
-                      <Link to={`journalEntries/${journalEntry.id}`}><Button style={{ marginRight: '10px' }} variant='contained' color='primary' >View</Button></Link>
+                      <Link to={`journalEntries/${journalEntry.id}`} style={{ textDecoration: 'none' }}><Button style={{ marginRight: '10px' }} variant='contained' color='primary' >View</Button></Link>
                       <Button variant='contained' color='secondary' onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>

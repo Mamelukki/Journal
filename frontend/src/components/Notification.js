@@ -17,6 +17,16 @@ const Notification = ({ notification }) => {
     return null
   }
 
+  if (notification.messageType === 'info') {
+    return (
+      <div className={classes.notification}>
+        <Alert severity='info'>
+          {notification.message}!
+        </Alert>
+      </div>
+    )
+  }
+
   if (notification.messageType === 'error') {
     return (
       <div className={classes.notification}>
