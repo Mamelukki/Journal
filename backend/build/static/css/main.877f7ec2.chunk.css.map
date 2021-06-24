@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,UACI,yBAA2B,CAC3B,QAAS,CACT,iBAAkB,CAClB,gBACJ","file":"main.877f7ec2.chunk.css","sourcesContent":["html, body {\n    font-family: Georgia, serif;\n    margin: 0;\n    position: relative;\n    min-height: 100vh;\n}\n"]}
