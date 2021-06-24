@@ -103,7 +103,7 @@ const App = () => {
             <JournalEntry journalEntry={journalEntry} />
           </Route>
           <Route path="/journalEntries">
-            <JournalEntryList currentUser={currentUser} journalEntries={journalEntries} />
+            <JournalEntryList />
           </Route>
           <Route path="/register">
             <RegisterForm />
@@ -117,12 +117,12 @@ const App = () => {
           <Route path="/">
             {!currentUser ?
               <HomePage></HomePage> :
-              <JournalEntryList currentUser={currentUser} journalEntries={journalEntries} />
+              <JournalEntryList />
             }
           </Route>
         </Switch>
       </div>
-      <footer style={{ position: 'absolute', bottom: '0', width: '100%', backgroundColor: '#e6e8e6' }}>
+      <footer style={{ position: 'absolute', bottom: '0', width: '100%', backgroundColor: '#f0f0f0' }}>
         <div style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center', padding: '25px' }}>
           <a href='https://github.com/Mamelukki/Journal' style={{ textDecoration: 'none' }}><GitHubIcon style={{ fontSize: 'medium', color: 'black', marginRight: '10px' }}></GitHubIcon></a>
           <a href='https://unsplash.com/' style={{ textDecoration: 'none' }}><ImageIcon style={{ fontSize: 'medium', color: 'black' }}></ImageIcon></a>

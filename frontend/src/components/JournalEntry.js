@@ -28,13 +28,25 @@ const JournalEntry = ({ journalEntry }) => {
   const [showEditForm, setShowEditForm] = useState(false)
   const [uploadFinished, setUploadFinished] = useState(true)
   const [showImageUpload, setShowImageUpload] = useState(false)
+  const [deletionFinished, setDeletionFinished] = useState(true)
 
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
     const confirm = window.confirm('Are you sure you want to remove this journal entry? Confirming will also delete the images of this journal entry.')
     if (confirm) {
-      dispatch(removeJournalEntry(id))
-      dispatch(addNotification('Journal entry deleted', 'success', 5))
-      history.push('/journalEntries')
+      try {
+        if (deletionFinished === true) {
+          setDeletionFinished(false)
+          dispatch(addNotification('Deleting entry, please wait', 'info', 5))
+          await journalEntryService.remove(id)
+          dispatch(removeJournalEntry(id))
+          dispatch(addNotification('Journal entry deleted', 'success', 5))
+          setDeletionFinished(true)
+          history.push('/journalEntries')
+        }
+      } catch (exception) {
+        dispatch(addNotification(`${exception.response.data.error}`, 'success', 5))
+        setDeletionFinished(true)
+      }
     }
   }
 
@@ -131,8 +143,8 @@ const JournalEntry = ({ journalEntry }) => {
       </div>
       <div style={{ marginBottom: '25px', marginTop: '25px' }}>
         <h2>{`${date}/${month}/${year}`}</h2>
-        <h1>{journalEntry.title}</h1>
-        <h4>{journalEntry.feelings ? `Feelings: ${journalEntry.feelings}` : null}</h4>
+        <h1 style={{ textTransform: 'uppercase' }}>{journalEntry.title}</h1>
+        {journalEntry.feelings ? <h4>Feelings: {journalEntry.feelings}</h4> : null}
         <div style={{ whiteSpace: 'pre-line' }}>{journalEntry.content}</div>
       </div>
       <div>

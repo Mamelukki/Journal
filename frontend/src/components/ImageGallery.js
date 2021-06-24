@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
     },
     '& .zoomedBackgroundImage': {
       height: 'auto',
-      maxWidth: `${window.innerWidth - 160}px`,
+      maxWidth: '80%',
     }
   }
 }))

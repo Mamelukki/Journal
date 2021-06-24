@@ -34,5 +34,5 @@ Date | Hours | Description
 14.06.2021 | 4 | Make backend run on Heroku
 17.06.2021 | 5 | Create a frontend production build for Heroku, improve home page and work on UI, add token expiration, make the application run on Heroku
 22.06.2021 | 6 | Fix routing error (where refreshing the page gives unknown endpoint), change error handling of image file type error, other small fixes 
-24.06.2021 | 7 | Create footer, improve home page, fix token expiration time, refactor journal entry component, make other small improvements
-Hours in total | 139
+24.06.2021 | 9 | Create footer, improve home page, fix token expiration time, refactor journal entry component, fix journal entry deletion (and relevant notifications), make other small improvements
+Hours in total | 141

@@ -86,7 +86,6 @@ export const removeImage = (journalEntryId, imageId) => {
 
 export const removeJournalEntry = (id) => {
   return async dispatch => {
-    await journalEntryService.remove(id)
     dispatch({
       type: 'REMOVE_JOURNAL_ENTRY',
       data: id
