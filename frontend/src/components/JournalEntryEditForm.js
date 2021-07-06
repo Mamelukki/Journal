@@ -58,13 +58,13 @@ const JournalEntryEditForm = ({ journalEntry, showEditForm, setShowEditForm }) =
             />
           </div>
           <TextField label='Content' multiline rows={7} fullWidth
-            id='editedContent'
+            id='content'
             value={content}
             onChange={({ target }) => setContent(target.value)}
           />
         </div>
         <br></br>
-        <Button style={{ marginRight: '10px' }} variant='contained' color='primary' type='submit'>Submit</Button>
+        <Button id='edit-entry-submit-button' style={{ marginRight: '10px' }} variant='contained' color='primary' type='submit'>Submit</Button>
         <Button style={{ marginRight: '10px' }} variant='contained' color='secondary' onClick={() => resetValues()}>Reset original values</Button>
         <Button style={{ marginRight: '10px' }} variant='contained' onClick={() => handleCancel()}>Cancel</Button>
       </form>

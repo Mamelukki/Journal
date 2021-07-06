@@ -93,13 +93,13 @@ const JournalEntry = ({ journalEntry }) => {
         {showEditForm === false && showImageUpload === false ?
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ margin: '5px' }}>
-              <Button variant='contained' color='primary' startIcon={<EditIcon />} onClick={() => setShowEditForm(!showEditForm)}>Edit</Button>
+              <Button id='edit-journal-entry-button' variant='contained' color='primary' startIcon={<EditIcon />} onClick={() => setShowEditForm(!showEditForm)}>Edit</Button>
             </div>
             <div style={{ margin: '5px' }}>
               <Button variant='contained' color='primary' startIcon={<PhotoCamera />} onClick={() => setShowImageUpload(!showImageUpload)}>Add image</Button>
             </div>
             <div style={{ margin: '5px' }}>
-              <Button variant='contained' color='secondary' startIcon={<DeleteIcon />} onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
+              <Button id='delete-journal-entry-button' variant='contained' color='secondary' startIcon={<DeleteIcon />} onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
             </div>
           </div>
           : null}

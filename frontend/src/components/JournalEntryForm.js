@@ -68,7 +68,7 @@ const JournalEntryForm = ({ showAddForm, setShowAddForm }) => {
           </div>
         </div>
         <br></br>
-        <Button style={{ marginRight: '10px' }} variant='contained' color='primary' type='submit'>Submit</Button>
+        <Button id='new-entry-submit-button' style={{ marginRight: '10px' }} variant='contained' color='primary' type='submit'>Submit</Button>
         <Button style={{ marginRight: '10px' }} variant='contained' color='secondary' onClick={() => resetValues()}>Reset</Button>
         <Button style={{ marginRight: '10px' }} variant='contained' onClick={() => handleCancel()}>Cancel</Button>
       </form>

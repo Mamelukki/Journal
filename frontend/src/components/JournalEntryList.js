@@ -55,7 +55,7 @@ const JournalEntryList = () => {
   return (
     <div>
       {personalJournalEntries.length === 0 && showAddForm === false ? <h3 style={{ marginBottom: '20px' }}>{'Nothing here yet! Get started by adding a new entry.'}</h3> : null}
-      {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button variant='contained' color='primary' onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
+      {showAddForm ? <JournalEntryForm showAddForm={showAddForm} setShowAddForm={setShowAddForm} /> : <Button id='add-new-entry-button' variant='contained' color='primary' onClick={() => setShowAddForm(!showAddForm)}>Add new entry</Button>}
       {personalJournalEntries.length > 0 && showAddForm === false ?
         <div>
           <br></br>
@@ -86,7 +86,7 @@ const JournalEntryList = () => {
                       {journalEntry.title}
                     </TableCell>
                     <TableCell>
-                      <Link to={`journalEntries/${journalEntry.id}`} style={{ textDecoration: 'none' }}><Button style={{ marginRight: '10px' }} variant='contained' color='primary' >View</Button></Link>
+                      <Link to={`journalEntries/${journalEntry.id}`} style={{ textDecoration: 'none' }}><Button style={{ marginRight: '10px' }} id='view-button' variant='contained' color='primary' >View</Button></Link>
                       <Button variant='contained' color='secondary' onClick={() => handleRemove(journalEntry.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>

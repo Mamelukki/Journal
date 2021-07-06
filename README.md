@@ -1,7 +1,7 @@
 # Journal
 
 Journaling app built with Node.js and React. MongoDB was used for storing data and Cloudinary for storing images. 
-[You can find the app and test it on Heroku](https://mamelukki-journal.herokuapp.com/)
+[You can find the app and test it on Heroku.](https://mamelukki-journal.herokuapp.com/)
 
 ### Features
 
@@ -26,9 +26,9 @@ Journaling app built with Node.js and React. MongoDB was used for storing data a
 ### What could be improved
 
 - Creating CSS files for all the styles instead of the current combination of inline styles and MaterialUI styles
-- Journal entry component needs to be refactored, it's too complex and long and takes care of too many things
 - After token expiration, the user should be logged out
 - Adding images should be possible already while creating entries, not just after creating
+- At least part of the data in the database should be encrypted because of the nature of the application (ursers might add sensitive data that should not be readable by others)
 - Adding multiple images at once
 - Adding CI/CD pipeline
 - Adding more (comprehensive) tests
