@@ -1,7 +1,12 @@
 # Journal
 
-Journaling app built with Node.js and React. MongoDB was used for storing data and Cloudinary for storing images. 
-[You can find the app and test it on Heroku.](https://mamelukki-journal.herokuapp.com/)
+[![codebeat badge](https://codebeat.co/badges/7bbb17b5-2cde-4108-aac0-eefcd439cf9f)](https://codebeat.co/projects/github-com-mamelukki-journal-main/)
+
+Journaling app built with Node.js and React. MongoDB was used for storing data, Cloudinary for storing images, codebeat for reviewing code quality and Heroku for running the application online.
+
+### Heroku
+
+[You can test the app by clicking here](https://mamelukki-journal.herokuapp.com/)
 
 ### Features
 
@@ -23,7 +28,7 @@ Journaling app built with Node.js and React. MongoDB was used for storing data a
 - How to use MaterialUI
 - Got more confident in programming and understand better the overall structure of web applications
 
-### What could be improved
+### What could be improved / added
 
 - Creating CSS files for all the styles instead of the current combination of inline styles and MaterialUI styles
 - After token expiration, the user should be logged out
@@ -32,3 +37,4 @@ Journaling app built with Node.js and React. MongoDB was used for storing data a
 - Adding multiple images at once
 - Adding CI/CD pipeline
 - Adding more (comprehensive) tests
+- Adding possibility to delete multiple journal entries at once
