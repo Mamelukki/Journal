@@ -1,6 +1,6 @@
 # Journal
 
-[![codebeat badge](https://codebeat.co/badges/7bbb17b5-2cde-4108-aac0-eefcd439cf9f)](https://codebeat.co/projects/github-com-mamelukki-journal-main/)
+[![codebeat badge](https://codebeat.co/badges/722f8062-037d-44a3-98b1-613e046e430d)](https://codebeat.co/projects/github-com-mamelukki-journal-main)
 
 Journaling app built with Node.js and React. MongoDB was used for storing data, Cloudinary for storing images, codebeat for reviewing code quality and Heroku for running the application online.
 
