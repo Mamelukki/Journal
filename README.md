@@ -40,3 +40,4 @@ Journaling app built with Node.js and React. MongoDB was used for storing data, 
   - Adding possibility to delete multiple journal entries at once
 - Adding CI/CD pipeline
 - Adding more (comprehensive) tests
+- Adding possibility to delete multiple journal entries at once
