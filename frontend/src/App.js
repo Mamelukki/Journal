@@ -49,7 +49,6 @@ const useStyles = makeStyles(() => ({
 const App = () => {
   const dispatch = useDispatch()
   const journalEntries = useSelector(state => state.journalEntries)
-  const users = useSelector(state => state.users)
   const currentUser = useSelector(state => state.currentUser)
   const notification = useSelector(state => state.notification)
   const match = useRouteMatch('/journalEntries/:id')
@@ -112,7 +111,7 @@ const App = () => {
             <LoginForm />
           </Route>
           <Route path="/users/:id">
-            <User users={users} />
+            <User />
           </Route>
           <Route path="/">
             {!currentUser ?

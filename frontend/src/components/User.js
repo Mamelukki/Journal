@@ -1,15 +1,16 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeUser } from '../reducers/userReducer'
 import { logout } from '../reducers/loginReducer'
 import { useParams, useHistory } from 'react-router-dom'
 import storage from '../utils/storage'
 import { TableContainer, Table, TableBody, Paper, TableRow, TableCell, Button } from '@material-ui/core'
 
-const User = ({ users }) => {
+const User = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const id = useParams().id
+  const users = useSelector(state => state.users)
   const user = users.find(user => user.id === id)
 
   if (!user) {
