@@ -36,4 +36,5 @@ Date | Hours | Description
 22.06.2021 | 6 | Fix routing error (where refreshing the page gives unknown endpoint), change error handling of image file type error, other small fixes 
 24.06.2021 | 9 | Create footer, improve home page, fix token expiration time, refactor journal entry component, fix journal entry deletion (and relevant notifications), make other small improvements
 06.07.2021 | 4 | Add more tests for the frontend and refactor the existing tests
-Hours in total | 145
+15.10.2021 | 0,5 | Small fixes
+Hours in total | 145,5
